@@ -1,0 +1,5 @@
+/Scripts/
+/tcl/
+/Lib/
+/Include/
+.pytest*

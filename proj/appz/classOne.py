@@ -9,4 +9,5 @@ class ClassOne(object):
         self.c = c
 
     def boolMethod(self):
-        return not True 
+        print(False)
+        return not True

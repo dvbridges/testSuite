@@ -3,9 +3,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                withEnv(['PATH+EXTRA=C:/Program Files/Git/bin/']) {
-                    sh 'pytest tests'
-                }
+                sh 'pytest tests'
             }
         }
     }

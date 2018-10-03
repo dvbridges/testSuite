@@ -1,12 +1,7 @@
 pipeline {
-    agent none
+    agent { docker { image 'python:3.5.1' } }
     stages {
-        stage('Build') {
-            agent {
-                docker {
-                    image 'python:2-alpine'
-                }
-            }
+        stage('build') {
             steps {
                 sh 'pytest tests'
             }

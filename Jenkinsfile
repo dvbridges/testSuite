@@ -1,9 +1,14 @@
 pipeline {
-    agent { docker { image 'python:3.5.1' } }
+    agent none
     stages {
-        stage('build') {
+        stage('Build') {
+            agent {
+                docker {
+                    image 'python:2-alpine'
+                }
+            }
             steps {
-                bat 'pytest tests'
+                sh 'pytest tests'
             }
         }
     }

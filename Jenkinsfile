@@ -1,9 +1,22 @@
 pipeline {
-    agent { docker { image 'python:3.5.1' } }
+    agent any
+
     stages {
-        stage('build') {
+        stage('Build') {
             steps {
-                sh 'pytest tests'
+                echo 'Building..'
+                bat 'pip install -e . --user'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+                bat 'pytest tests'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
             }
         }
     }

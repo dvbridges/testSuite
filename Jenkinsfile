@@ -5,6 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
+                bat 'pip install -e . --user'
             }
         }
         stage('Test') {

@@ -3,6 +3,10 @@ pipeline {
     stages {
         stage('build') {
             steps {
+                # extend path
+                PATH=$Path:C:\Program Files\Git\bin
+                # comment
+                FOO=BAR
                 sh 'pytest tests'
             }
         }

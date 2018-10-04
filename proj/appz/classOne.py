@@ -10,3 +10,6 @@ class ClassOne(object):
 
     def boolMethod(self):
         return True
+
+    def untestedMethod(self):
+        return True

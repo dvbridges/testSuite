@@ -33,6 +33,7 @@ pipeline {
     post {
         always {
             step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
+            step([$class: 'WarningsPublisher', parserConfigurations: [[parserName: 'PYLint', pattern   : 'pylint.out']], unstableTotalAll: '0', usePreviousBuildAsReference: true])
         }
     }
 }

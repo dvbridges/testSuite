@@ -17,7 +17,7 @@ pipeline {
             steps {
                 echo 'Testing..'
                 bat 'pytest --cov=proj tests'
-                bat 'pylint -r y proj'
+                bat 'pylint --exit-zero -r y proj'
             }
         }
         stage('Deploy') {

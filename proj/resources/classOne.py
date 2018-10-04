@@ -1,5 +1,6 @@
 #!usr/bin/env python
 # -*- coding: utf8 -*-
+"""Module docstring"""
 
 class ClassOne(object):
     """Class docstring"""

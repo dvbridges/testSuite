@@ -17,7 +17,7 @@ pipeline {
             steps {
                 echo 'Testing..'
                 bat 'pytest --cov-report xml:coverage.xml --cov=proj tests' // creates coverage doc
-                bat 'pylint --exit-zero -f parseable -r y proj > pylint.out | type pylint.out' // creates pylint doc
+                bat 'pylint --exit-zero -f parseable -d C0103 -r y proj > pylint.out | type pylint.out' // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
             }
         }
         stage('Deploy') {
@@ -33,7 +33,7 @@ pipeline {
     post {
         always {
             step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
-            step([$class: 'WarningsPublisher', parserConfigurations: [[parserName: 'PYLint', pattern   : 'pylint.out']], unstableTotalAll: '0', usePreviousBuildAsReference: true])
+            step([$class: 'WarningsPublisher', parserConfigurations: [[parserName: 'PYLint', pattern: 'pylint.out']], unstableTotalAll: '0', usePreviousBuildAsReference: true])
         }
     }
 }

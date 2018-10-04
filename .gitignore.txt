@@ -2,4 +2,8 @@
 /tcl/
 /Lib/
 /Include/
-.pytest*
+*.pytest
+*.swp
+*.pyc
+tags
+.coverage

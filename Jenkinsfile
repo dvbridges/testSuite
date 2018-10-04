@@ -8,8 +8,8 @@ pipeline {
                 echo "Current build: ${currentBuild.number}";
                 echo "Current build start time: ${currentBuild.startTimeInMillis}";
                 echo "Printing env params...";
-                echo "Jenkins workspace: ${env.WORKSPACE};
-                echo "Jenkins home directory: ${env.JENKINS_HOME};
+                echo "Jenkins workspace: ${env.WORKSPACE}";
+                echo "Jenkins home directory: ${env.JENKINS_HOME}";
                 bat 'pip install -e . --user'
             }
         }

@@ -16,8 +16,8 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing..'
-                bat 'pytest --cov-report xml:coverage.xml --cov=proj tests'
-                bat 'pylint --exit-zero -f parseable -r y proj > pylint.out | type pylint.out'
+                bat 'pytest --cov-report xml:coverage.xml --cov=proj tests' // creates coverage doc
+                bat 'pylint --exit-zero -f parseable -r y proj > pylint.out | type pylint.out' // creates pylint doc
             }
         }
         stage('Deploy') {
@@ -32,7 +32,6 @@ pipeline {
     }
     post {
         always {
-            junit '**/coverage.xml'
             step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
         }
     }

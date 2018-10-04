@@ -16,7 +16,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing..'
-                bat 'pytest tests'
+                bat 'pytest --cov=proj tests'
             }
         }
         stage('Deploy') {

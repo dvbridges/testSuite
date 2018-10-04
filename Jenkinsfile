@@ -25,8 +25,15 @@ pipeline {
                 echo 'Deploying....'
                 echo "Current build status: ${currentBuild.result}";
                 echo "Current build duration: ${currentBuild.durationString}";
-                echo "cobertura coberturaReportFile: '--datafile coverage.xml --format xml', sourceEncoding: 'ASCII', zoomCoverageChart: true"
+
             }
+
+        }
+    }
+    post {
+        always {
+            junit '**/coverage.xml'
+            step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
         }
     }
 }

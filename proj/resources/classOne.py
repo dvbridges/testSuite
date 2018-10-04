@@ -2,6 +2,7 @@
 # -*- coding: utf8 -*-
 
 class ClassOne(object):
+    """Class docstring"""
     def __init__(self, a, b, c):
 
         self.a = a

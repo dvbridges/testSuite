@@ -5,6 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
+                echo 'currentBuild.number'
                 bat 'pip install -e . --user'
             }
         }

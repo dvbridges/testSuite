@@ -1,0 +1,6 @@
+[
+  "tests/test_appz/test_AppzClassOne.py::TestClassOne::()::test_boolMethod",
+  "tests/test_appz/test_AppzClassTwo.py::TestClassOne::()::test_boolMethod",
+  "tests/test_resources/test_ResClassOne.py::TestClassOne::()::test_boolMethod",
+  "tests/test_resources/test_ResClassTwo.py::TestClassOne::()::test_boolMethod"
+]

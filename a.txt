@@ -1,0 +1,214 @@
+************* Module output
+output:1: [F0001(fatal), ] No module named output
+************* Module path=.
+path=.:1: [F0001(fatal), ] No module named path=.
+************* Module proj
+proj\__init__.py:1: [C0304(missing-final-newline), ] Final newline missing
+proj\__init__.py:1: [C0111(missing-docstring), ] Missing module docstring
+proj\__init__.py:1: [C0103(invalid-name), ] Constant name "name" doesn't conform to UPPER_CASE naming style
+************* Module proj.appz.classOne
+proj\appz\classOne.py:1: [C0103(invalid-name), ] Module name "classOne" doesn't conform to snake_case naming style
+proj\appz\classOne.py:1: [C0111(missing-docstring), ] Missing module docstring
+proj\appz\classOne.py:7: [C0103(invalid-name), ClassOne.__init__] Attribute name "a" doesn't conform to snake_case naming style
+proj\appz\classOne.py:8: [C0103(invalid-name), ClassOne.__init__] Attribute name "b" doesn't conform to snake_case naming style
+proj\appz\classOne.py:9: [C0103(invalid-name), ClassOne.__init__] Attribute name "c" doesn't conform to snake_case naming style
+proj\appz\classOne.py:4: [C0111(missing-docstring), ClassOne] Missing class docstring
+proj\appz\classOne.py:4: [R0205(useless-object-inheritance), ClassOne] Class 'ClassOne' inherits from object, can be safely removed from bases in python3
+proj\appz\classOne.py:11: [C0103(invalid-name), ClassOne.boolMethod] Method name "boolMethod" doesn't conform to snake_case naming style
+proj\appz\classOne.py:11: [C0111(missing-docstring), ClassOne.boolMethod] Missing method docstring
+proj\appz\classOne.py:11: [R0201(no-self-use), ClassOne.boolMethod] Method could be a function
+proj\appz\classOne.py:4: [R0903(too-few-public-methods), ClassOne] Too few public methods (1/2)
+************* Module proj.appz.classTwo
+proj\appz\classTwo.py:1: [C0103(invalid-name), ] Module name "classTwo" doesn't conform to snake_case naming style
+proj\appz\classTwo.py:1: [C0111(missing-docstring), ] Missing module docstring
+proj\appz\classTwo.py:7: [C0103(invalid-name), ClassTwo.__init__] Attribute name "a" doesn't conform to snake_case naming style
+proj\appz\classTwo.py:8: [C0103(invalid-name), ClassTwo.__init__] Attribute name "b" doesn't conform to snake_case naming style
+proj\appz\classTwo.py:9: [C0103(invalid-name), ClassTwo.__init__] Attribute name "c" doesn't conform to snake_case naming style
+proj\appz\classTwo.py:4: [C0111(missing-docstring), ClassTwo] Missing class docstring
+proj\appz\classTwo.py:4: [R0205(useless-object-inheritance), ClassTwo] Class 'ClassTwo' inherits from object, can be safely removed from bases in python3
+proj\appz\classTwo.py:11: [C0103(invalid-name), ClassTwo.boolMethod] Method name "boolMethod" doesn't conform to snake_case naming style
+proj\appz\classTwo.py:11: [C0111(missing-docstring), ClassTwo.boolMethod] Missing method docstring
+proj\appz\classTwo.py:11: [R0201(no-self-use), ClassTwo.boolMethod] Method could be a function
+proj\appz\classTwo.py:4: [R0903(too-few-public-methods), ClassTwo] Too few public methods (1/2)
+************* Module proj.resources.classOne
+proj\resources\classOne.py:1: [C0103(invalid-name), ] Module name "classOne" doesn't conform to snake_case naming style
+proj\resources\classOne.py:1: [C0111(missing-docstring), ] Missing module docstring
+proj\resources\classOne.py:7: [C0103(invalid-name), ClassOne.__init__] Attribute name "a" doesn't conform to snake_case naming style
+proj\resources\classOne.py:8: [C0103(invalid-name), ClassOne.__init__] Attribute name "b" doesn't conform to snake_case naming style
+proj\resources\classOne.py:9: [C0103(invalid-name), ClassOne.__init__] Attribute name "c" doesn't conform to snake_case naming style
+proj\resources\classOne.py:4: [C0111(missing-docstring), ClassOne] Missing class docstring
+proj\resources\classOne.py:4: [R0205(useless-object-inheritance), ClassOne] Class 'ClassOne' inherits from object, can be safely removed from bases in python3
+proj\resources\classOne.py:11: [C0103(invalid-name), ClassOne.boolMethod] Method name "boolMethod" doesn't conform to snake_case naming style
+proj\resources\classOne.py:11: [C0111(missing-docstring), ClassOne.boolMethod] Missing method docstring
+proj\resources\classOne.py:11: [R0201(no-self-use), ClassOne.boolMethod] Method could be a function
+proj\resources\classOne.py:4: [R0903(too-few-public-methods), ClassOne] Too few public methods (1/2)
+************* Module proj.resources.classTwo
+proj\resources\classTwo.py:1: [C0103(invalid-name), ] Module name "classTwo" doesn't conform to snake_case naming style
+proj\resources\classTwo.py:1: [C0111(missing-docstring), ] Missing module docstring
+proj\resources\classTwo.py:7: [C0103(invalid-name), ClassTwo.__init__] Attribute name "a" doesn't conform to snake_case naming style
+proj\resources\classTwo.py:8: [C0103(invalid-name), ClassTwo.__init__] Attribute name "b" doesn't conform to snake_case naming style
+proj\resources\classTwo.py:9: [C0103(invalid-name), ClassTwo.__init__] Attribute name "c" doesn't conform to snake_case naming style
+proj\resources\classTwo.py:4: [C0111(missing-docstring), ClassTwo] Missing class docstring
+proj\resources\classTwo.py:4: [R0205(useless-object-inheritance), ClassTwo] Class 'ClassTwo' inherits from object, can be safely removed from bases in python3
+proj\resources\classTwo.py:11: [C0103(invalid-name), ClassTwo.boolMethod] Method name "boolMethod" doesn't conform to snake_case naming style
+proj\resources\classTwo.py:11: [C0111(missing-docstring), ClassTwo.boolMethod] Missing method docstring
+proj\resources\classTwo.py:11: [R0201(no-self-use), ClassTwo.boolMethod] Method could be a function
+proj\resources\classTwo.py:4: [R0903(too-few-public-methods), ClassTwo] Too few public methods (1/2)
+************* Module proj.resources.__init__
+proj\resources\__init__.py:1: [R0801(duplicate-code), ] Similar lines in 2 files
+==proj.appz.classTwo:3
+==proj.resources.classTwo:3
+class ClassTwo(object):
+    def __init__(self, a, b, c):
+
+        self.a = a
+        self.b = b
+        self.c = c
+
+    def boolMethod(self):
+        return True
+proj\resources\__init__.py:1: [R0801(duplicate-code), ] Similar lines in 2 files
+==proj.appz.classOne:3
+==proj.resources.classOne:3
+class ClassOne(object):
+    def __init__(self, a, b, c):
+
+        self.a = a
+        self.b = b
+        self.c = c
+
+    def boolMethod(self):
+        return True
+proj\resources\__init__.py:1: [R0801(duplicate-code), ] Similar lines in 4 files
+==proj.appz.classOne:4
+==proj.appz.classTwo:4
+==proj.resources.classOne:4
+==proj.resources.classTwo:4
+    def __init__(self, a, b, c):
+
+        self.a = a
+        self.b = b
+        self.c = c
+
+    def boolMethod(self):
+        return True
+
+
+Report
+======
+29 statements analysed.
+
+Statistics by type
+------------------
+
++---------+-------+-----------+-----------+------------+---------+
+|type     |number |old number |difference |%documented |%badname |
++=========+=======+===========+===========+============+=========+
+|module   |7      |7          |=          |28.57       |57.14    |
++---------+-------+-----------+-----------+------------+---------+
+|class    |4      |4          |=          |0.00        |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|method   |8      |8          |=          |50.00       |50.00    |
++---------+-------+-----------+-----------+------------+---------+
+|function |0      |0          |=          |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+
+
+
+Raw metrics
+-----------
+
++----------+-------+------+---------+-----------+
+|type      |number |%     |previous |difference |
++==========+=======+======+=========+===========+
+|code      |40     |63.49 |40       |=          |
++----------+-------+------+---------+-----------+
+|docstring |0      |0.00  |0        |=          |
++----------+-------+------+---------+-----------+
+|comment   |8      |12.70 |8        |=          |
++----------+-------+------+---------+-----------+
+|empty     |15     |23.81 |15       |=          |
++----------+-------+------+---------+-----------+
+
+
+
+Duplication
+-----------
+
++-------------------------+-------+---------+-----------+
+|                         |now    |previous |difference |
++=========================+=======+=========+===========+
+|nb duplicated lines      |42     |42       |=          |
++-------------------------+-------+---------+-----------+
+|percent duplicated lines |85.714 |85.714   |=          |
++-------------------------+-------+---------+-----------+
+
+
+
+Messages by category
+--------------------
+
++-----------+-------+---------+-----------+
+|type       |number |previous |difference |
++===========+=======+=========+===========+
+|convention |35     |35       |=          |
++-----------+-------+---------+-----------+
+|refactor   |15     |15       |=          |
++-----------+-------+---------+-----------+
+|warning    |0      |0        |=          |
++-----------+-------+---------+-----------+
+|error      |0      |0        |=          |
++-----------+-------+---------+-----------+
+
+
+
+% errors / warnings by module
+-----------------------------
+
++------------------------+------+--------+---------+-----------+
+|module                  |error |warning |refactor |convention |
++========================+======+========+=========+===========+
+|proj.resources.classTwo |0.00  |0.00    |20.00    |22.86      |
++------------------------+------+--------+---------+-----------+
+|proj.resources.classOne |0.00  |0.00    |20.00    |22.86      |
++------------------------+------+--------+---------+-----------+
+|proj.appz.classTwo      |0.00  |0.00    |20.00    |22.86      |
++------------------------+------+--------+---------+-----------+
+|proj.appz.classOne      |0.00  |0.00    |20.00    |22.86      |
++------------------------+------+--------+---------+-----------+
+|proj.resources.__init__ |0.00  |0.00    |20.00    |0.00       |
++------------------------+------+--------+---------+-----------+
+|proj                    |0.00  |0.00    |0.00     |8.57       |
++------------------------+------+--------+---------+-----------+
+
+
+
+Messages
+--------
+
++---------------------------+------------+
+|message id                 |occurrences |
++===========================+============+
+|invalid-name               |21          |
++---------------------------+------------+
+|missing-docstring          |13          |
++---------------------------+------------+
+|useless-object-inheritance |4           |
++---------------------------+------------+
+|too-few-public-methods     |4           |
++---------------------------+------------+
+|no-self-use                |4           |
++---------------------------+------------+
+|duplicate-code             |3           |
++---------------------------+------------+
+|fatal                      |2           |
++---------------------------+------------+
+|missing-final-newline      |1           |
++---------------------------+------------+
+
+
+
+
+--------------------------------------------------------------------
+Your code has been rated at -7.24/10 (previous run: -7.24/10, +0.00)
+

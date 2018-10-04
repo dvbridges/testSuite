@@ -1,9 +1,0 @@
-/Scripts/
-/tcl/
-/Lib/
-/Include/
-*.pytest
-*.swp
-*.pyc
-tags
-.coverage

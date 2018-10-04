@@ -5,7 +5,11 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                echo "this is a string ${currentBuild.number}";
+                echo "Current build: ${currentBuild.number}";
+                echo "Current build start time: ${currentBuild.startTimeInMillis}";
+                echo "Printing env params...";
+                echo "Jenkins workspace: ${env.WORKSPACE};
+                echo "Jenkins home directory: ${env.JENKINS_HOME};
                 bat 'pip install -e . --user'
             }
         }
@@ -18,6 +22,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
+                echo "Current build status: ${currentBuild.result}";
+                echo "Current build duration: ${currentBuild.durationString}";
             }
         }
     }

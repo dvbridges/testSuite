@@ -13,4 +13,4 @@ class ClassOne(object):
 
     def boolMethod(self):
         """Method docstring"""
-        return True
+        return not True

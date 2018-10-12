@@ -14,7 +14,7 @@ pipeline {
             }
             post {
                 success {
-                    archiveArtifacts '*.hpi, target/*.jpi
+                    archiveArtifacts '*.hpi, target/*.jpi'
                 }
             }
 

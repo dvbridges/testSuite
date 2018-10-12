@@ -27,7 +27,7 @@ pipeline {
             }
             post {
                 failure {
-                    archiveArtifacts artifacts 'proj/appz/*.py, proj/resources/*.py' , fingerprint: true
+                    archiveArtifacts artifacts: 'proj/appz/*.py, proj/resources/*.py' , fingerprint: true
                 }
             }
         }

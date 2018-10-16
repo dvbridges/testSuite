@@ -36,7 +36,7 @@ pipeline {
 
             post {
                 success {
-                    archiveArtifacts '*.py'  // Save all files ending with .py
+                    archiveArtifacts '**/*.py'  // Save all files ending with .py
                 }
             }
         }

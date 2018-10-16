@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Initialisation') {
             steps {
                 echo 'Building..'
                 echo "Current build: ${currentBuild.number}";
@@ -13,20 +13,21 @@ pipeline {
                 bat 'pip install -r requirements.txt'
                 bat 'virtualenv testProject'
                 bat 'testProject\\Scripts\\activate'
-                bat 'pip install -e . --user'
             }
+        stage('Build') {
+            steps {
+                bat 'pip install -e . --user'
+
             post {
                 success {
                     archiveArtifacts '*.py'
                 }
             }
-
-        }
         stage('Test') {
             steps {
                 echo 'Testing..'
                 bat 'pytest --cov-report xml:coverage.xml --cov=proj tests' // creates coverage doc
-                bat 'pylint --exit-zero -f parseable -d C0103 -r y proj > pylint.out | type pylint.out' // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
+                bat 'pylint --exit-zero -f parseable -r y proj > pylint.out | type pylint.out' // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
             }
         }
         stage('Deploy') {
@@ -36,7 +37,6 @@ pipeline {
                 echo "Current build duration: ${currentBuild.durationString}";
 
             }
-
         }
     }
     post {

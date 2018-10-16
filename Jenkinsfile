@@ -14,15 +14,17 @@ pipeline {
                 bat 'virtualenv testProject'
                 bat 'testProject\\Scripts\\activate'
             }
+        }
         stage('Build') {
             steps {
                 bat 'pip install -e . --user'
-
+            }
             post {
                 success {
                     archiveArtifacts '*.py'
                 }
             }
+        }
         stage('Test') {
             steps {
                 echo 'Testing..'
@@ -38,7 +40,6 @@ pipeline {
 
             }
         }
-    }
     post {
         always {
             step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])

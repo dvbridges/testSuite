@@ -14,7 +14,7 @@ pipeline {
                 bat 'virutalenv testProject'
                 bat 'cd testProject/Scripts'
                 bat 'activate'
-                bat 'cd ..\..'
+                bat 'cd..\\..'
                 bat 'pip install -e . --user'
             }
             post {

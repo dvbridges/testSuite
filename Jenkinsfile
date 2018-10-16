@@ -13,7 +13,6 @@ pipeline {
                 bat 'pip install -r requirements.txt'
                 bat 'virtualenv testProject'
                 bat 'testProject\\Scripts\\activate'
-                bat 'cd..\\..'
                 bat 'pip install -e . --user'
             }
             post {

@@ -13,8 +13,9 @@ pipeline {
                 bat 'pip install -r requirements.txt'
                 bat 'virtualenv testProject'
                 bat 'testProject\\Scripts\\activate'
+                }
             }
-        }
+
         stage('Build') {
             steps {
                 bat 'pip install -e . --user'
@@ -25,6 +26,7 @@ pipeline {
                 }
             }
         }
+
         stage('Test') {
             steps {
                 echo 'Testing..'
@@ -32,6 +34,7 @@ pipeline {
                 bat 'pylint --exit-zero -f parseable -r y proj > pylint.out | type pylint.out' // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
             }
         }
+
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
@@ -40,6 +43,7 @@ pipeline {
 
             }
         }
+    }
     post {
         always {
             step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
@@ -47,4 +51,3 @@ pipeline {
             }
         }
     }
-}

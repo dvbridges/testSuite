@@ -10,6 +10,11 @@ pipeline {
                 echo "Printing env params...";
                 echo "Jenkins workspace: ${env.WORKSPACE}";
                 echo "Jenkins home directory: ${env.JENKINS_HOME}";
+                bat 'pip install -r requirements.txt'
+                bat 'virutalenv testProject'
+                bat 'cd testProject'/Scripts'
+                bat 'activate'
+                bat 'cd ..\..'
                 bat 'pip install -e . --user'
             }
             post {

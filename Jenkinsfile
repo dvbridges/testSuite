@@ -33,6 +33,12 @@ pipeline {
                 bat 'pytest --cov-report xml:coverage.xml --cov=proj tests' // creates coverage doc
                 bat 'pylint --exit-zero -f parseable -r y proj > pylint.out | type pylint.out' // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
             }
+
+            post {
+                success {
+                    archiveArtifacts '*.py'  // Save all files ending with .py
+                }
+            }
         }
 
         stage('Deploy') {

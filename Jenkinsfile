@@ -12,8 +12,7 @@ pipeline {
                 echo "Jenkins home directory: ${env.JENKINS_HOME}";
                 bat 'pip install -r requirements.txt'
                 bat 'virtualenv testProject'
-                bat 'cd testProject/Scripts'
-                bat 'activate'
+                bat 'testProject\\Scripts\\activate'
                 bat 'cd..\\..'
                 bat 'pip install -e . --user'
             }

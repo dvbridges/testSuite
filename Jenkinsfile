@@ -6,10 +6,16 @@ pipeline {
             steps {
                 echo 'Building..'
                 echo "Current build: ${currentBuild.number}";
-                echo "Current build start time: ${currentBuild.startTimeInMillis}";
-                echo "Printing env params...";
-                echo "Jenkins workspace: ${env.WORKSPACE}";
-                echo "Jenkins home directory: ${env.JENKINS_HOME}";
+                echo "Current build start time: ${currentBuild.startTimeInMillis}"
+                echo "Printing env params..."
+                echo "Jenkins workspace: ${env.WORKSPACE}"
+                echo "Jenkins home directory: ${env.JENKINS_HOME}"
+                echo "Jenkins node name: ${env.NODE_NAME}"
+                echo 'Defining parameters...'
+                string(defaultValue: 'master', description: 'Branch name', name: 'BRANCH')
+                echo "param.BRANCH: ${param.BRANCH}"
+                bat "set param.BRANCH = ${env.BRANCH_NAME}"
+                echo "new param.BRANCH: ${param.BRANCH}"
                 bat 'pip install -r requirements.txt'
                 bat 'virtualenv testProject'
                 bat 'testProject\\Scripts\\activate'
@@ -44,6 +50,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
+                echo "Use env.BRANCH_NAME (${env.BRANCH_NAME}) in case you wish to deploy to production from master but not from feature branches"
                 echo "Current build status: ${currentBuild.result}";
                 echo "Current build duration: ${currentBuild.durationString}";
             }

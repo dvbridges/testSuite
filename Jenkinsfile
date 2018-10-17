@@ -1,7 +1,6 @@
 pipeline {
     agent any
     environment {
-        echo 'Defining parameters...'
         BRANCH = "${env.BRANCH_NAME}"
     }
     stages {

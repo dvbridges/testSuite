@@ -1,10 +1,9 @@
 pipeline {
+    agent any
     environment {
         echo 'Defining parameters...'
         BRANCH = "${env.BRANCH_NAME}"
-   }
-    agent any
-
+    }
     stages {
         stage('Initialisation') {
             steps {
@@ -15,8 +14,14 @@ pipeline {
                 echo "Jenkins workspace: ${env.WORKSPACE}"
                 echo "Jenkins home directory: ${env.JENKINS_HOME}"
                 echo "Jenkins node name: ${env.NODE_NAME}"
-                echo 'Checking parameters...'
-                echo "param.BRANCH: ${param.BRANCH}"
+                echo 'Checking parameters...'  // Example of scripting in declarative pipeline
+                script {
+                    if (ENVIRONMENT_NAME == 'master') {
+                        echo "param.BRANCH: 'master'"
+                    } else if (ENVIRONMENT_NAME != 'master') {
+                        echo "param.BRANCH: ${param.BRANCH}"
+                    }
+                }
                 bat 'pip install -r requirements.txt'
                 bat 'virtualenv testProject'
                 bat 'testProject\\Scripts\\activate'

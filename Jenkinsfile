@@ -12,7 +12,7 @@ pipeline {
                 echo "Jenkins home directory: ${env.JENKINS_HOME}"
                 echo "Jenkins node name: ${env.NODE_NAME}"
                 echo 'Defining parameters...'
-                string(defaultValue: 'master', description: 'Branch name', name: 'BRANCH')
+                bat 'string(defaultValue: 'master', description: 'Branch name', name: 'BRANCH')'
                 echo "param.BRANCH: ${param.BRANCH}"
                 bat "set param.BRANCH = ${env.BRANCH_NAME}"
                 echo "new param.BRANCH: ${param.BRANCH}"

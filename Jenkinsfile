@@ -2,7 +2,6 @@ pipeline {
     agent any
     environment {
         BRANCH = "${env.BRANCH_NAME}"
-        BRANCH_ALT = env.BRANCH_NAME
     }
     stages {
         stage('Initialisation') {
@@ -20,8 +19,6 @@ pipeline {
                         echo "param.BRANCH: 'master'"
                     } else if (BRANCH != 'master') {
                         echo "param.BRANCH: ${BRANCH}"
-                        echo "param.BRANCH: ${BRANCH_ALT}"
-
                     }
                 }
                 bat 'pip install -r requirements.txt'

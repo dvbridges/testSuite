@@ -18,7 +18,7 @@ pipeline {
                     if (BRANCH == 'master') {
                         echo "param.BRANCH: 'master'"
                     } else if (BRANCH != 'master') {
-                        echo "param.BRANCH: ${param.BRANCH}"
+                        echo "param.BRANCH: ${BRANCH}"
                     }
                 }
                 bat 'pip install -r requirements.txt'

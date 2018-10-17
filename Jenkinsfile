@@ -1,4 +1,8 @@
 pipeline {
+    environment {
+        echo 'Defining parameters...'
+        BRANCH = "${env.BRANCH_NAME}"
+   }
     agent any
 
     stages {
@@ -11,11 +15,8 @@ pipeline {
                 echo "Jenkins workspace: ${env.WORKSPACE}"
                 echo "Jenkins home directory: ${env.JENKINS_HOME}"
                 echo "Jenkins node name: ${env.NODE_NAME}"
-                echo 'Defining parameters...'
-                bat 'string(defaultValue: 'master', description: 'Branch name', name: 'BRANCH')'
+                echo 'Checking parameters...'
                 echo "param.BRANCH: ${param.BRANCH}"
-                bat "set param.BRANCH = ${env.BRANCH_NAME}"
-                echo "new param.BRANCH: ${param.BRANCH}"
                 bat 'pip install -r requirements.txt'
                 bat 'virtualenv testProject'
                 bat 'testProject\\Scripts\\activate'

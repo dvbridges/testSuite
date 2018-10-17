@@ -22,7 +22,7 @@ pipeline {
             }
             post {
                 success {
-                    archiveArtifacts '*.py'
+                    archiveArtifacts '*.*'
                 }
             }
         }
@@ -46,7 +46,7 @@ pipeline {
                 echo 'Deploying....'
                 echo "Current build status: ${currentBuild.result}";
                 echo "Current build duration: ${currentBuild.durationString}";
-
+                bat 'testProject\\Scripts\\deactivate'
             }
         }
     }

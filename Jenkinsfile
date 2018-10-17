@@ -15,9 +15,9 @@ pipeline {
                 echo "Jenkins node name: ${env.NODE_NAME}"
                 echo 'Checking parameters...'  // Example of scripting in declarative pipeline
                 script {
-                    if (ENVIRONMENT_NAME == 'master') {
+                    if (BRANCH == 'master') {
                         echo "param.BRANCH: 'master'"
-                    } else if (ENVIRONMENT_NAME != 'master') {
+                    } else if (BRANCH != 'master') {
                         echo "param.BRANCH: ${param.BRANCH}"
                     }
                 }

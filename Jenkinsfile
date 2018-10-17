@@ -56,6 +56,12 @@ pipeline {
             steps {
                 echo 'Deploying....'
                 echo "Use env.BRANCH_NAME (${env.BRANCH_NAME}) in case you wish to deploy to production from master but not from feature branches"
+                script {
+                    if ($env.BRANCH != 'master') {
+                        env.NEW_VAR = $env.BRANCH
+                        echo "I have defined a new variable and the value is: $env.NEW_VAR"
+                        }
+                    }
                 echo "Current build status: ${currentBuild.result}";
                 echo "Current build duration: ${currentBuild.durationString}";
             }

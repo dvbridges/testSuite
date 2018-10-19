@@ -29,7 +29,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                withPythonEnv('testProject') {
+                withPythonEnv('testProject\\Scripts') {
                     // Uses the default system installation of Python
                     // Equivalent to withPythonEnv('/usr/bin/python')
                     bat 'python --version'

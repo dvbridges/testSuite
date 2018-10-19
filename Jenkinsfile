@@ -16,9 +16,9 @@ pipeline {
                 echo 'Checking parameters...'  // Example of scripting in declarative pipeline
                 script {
                     if (BRANCH == 'master') {
-                        echo "param.BRANCH: 'master'"
+                        echo "BRANCH: 'master'"
                     } else if (BRANCH != 'master') {
-                        echo "param.BRANCH: ${BRANCH}"
+                        echo "BRANCH: ${BRANCH}"
                     }
                 }
                 bat 'pip install -r requirements.txt'

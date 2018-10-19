@@ -21,30 +21,30 @@ pipeline {
                         echo "BRANCH: ${BRANCH}"
                     }
                 }
-                //bat 'pip install -r requirements.txt'
-                //bat 'virtualenv testProject'
-                //bat 'testProject\\Scripts\\activate'
+                bat 'pip install -r requirements.txt'
+                bat 'virtualenv testProject'
+                bat 'testProject\\Scripts\\activate'
                 }
             }
-        withPythonEnv('python3') {
+
         stage('Build') {
-
-                steps {
-                    bat 'pip install -e . --user'
-                }
-                post {
-                    success {
-                        archiveArtifacts '*.*'
-                    }
+            steps {
+                bat 'pip install -e . --user'
+            }
+            post {
+                success {
+                    archiveArtifacts '*.*'
                 }
             }
-
+        }
 
         stage('Test') {
             steps {
                 echo 'Testing..'
-                bat 'pytest --cov-report xml:coverage.xml --cov=proj tests' // creates coverage doc
+                bat 'pytest --cov-report xml:coveragePy3.xml --cov=proj tests' // creates coverage doc
+                bat 'py -2 -m pytest --cov-report xml:coveragePy2.xml --cov=proj tests' // creates coverage doc
                 bat 'pylint --exit-zero -f parseable -r y proj > pylint.out | type pylint.out' // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
+                bat 'py -2 -m pylint --exit-zero -f parseable -r y proj > pylintpy2.out | type pylintpy2.out' // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
             }
 
             post {
@@ -71,10 +71,11 @@ pipeline {
     }
     post {
         always {
-            step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
+            step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coveragePy3.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
+            step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coveragePy2.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
             step([$class: 'WarningsPublisher', parserConfigurations: [[parserName: 'PYLint', pattern: 'pylint.out']], unstableTotalHigh: '1', unstableTotalNormal: '30', unstableTotalLow: '100', usePreviousBuildAsReference: true])
+            step([$class: 'WarningsPublisher', parserConfigurations: [[parserName: 'PYLint', pattern: 'pylintpy2.out']], unstableTotalHigh: '1', unstableTotalNormal: '30', unstableTotalLow: '100', usePreviousBuildAsReference: true])
             bat 'testProject\\Scripts\\deactivate'
             }
         }
     }
-}

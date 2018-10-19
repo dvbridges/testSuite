@@ -28,18 +28,9 @@ pipeline {
                 }
             }
 
-        stage('BuildPython2') {
+        stage('Install software') {
             steps {
                 bat 'py -2 -m pip install -e . --user'
-            }
-            post {
-                success {
-                    archiveArtifacts '*.*'
-                }
-            }
-        }
-        stage('BuildPython3') {
-            steps {
                 bat 'pip install -e . --user'
             }
             post {
@@ -49,7 +40,7 @@ pipeline {
             }
         }
 
-        stage('TestPython2') {
+        stage('Test Python 2') {
             steps {
                 echo 'Testing Python 2...'
                 bat 'py -2 -m pytest --cov-report xml:coveragePy2.xml --cov=proj tests' // creates coverage doc
@@ -62,7 +53,7 @@ pipeline {
                 }
             }
         }
-        stage('TestPython3') {
+        stage('Test Python 3') {
             steps {
                 echo 'Testing Python 3...'
                 bat 'pytest --cov-report xml:coveragePy3.xml --cov=proj tests' // creates coverage doc
@@ -75,6 +66,7 @@ pipeline {
                 }
             }
         }
+
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
@@ -90,8 +82,10 @@ pipeline {
             }
         }
     }
+    
     post {
         always {
+            echo 'See https://jenkins.io/doc/pipeline/steps/cobertura/ for Cobertura plugin options'
             step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coveragePy2.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: true])
             step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coveragePy3.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
             step([$class: 'WarningsPublisher', parserConfigurations: [[parserName: 'PYLint', pattern: 'pylintpy2.out']], unstableTotalHigh: '1', unstableTotalNormal: '30', unstableTotalLow: '100', usePreviousBuildAsReference: true])

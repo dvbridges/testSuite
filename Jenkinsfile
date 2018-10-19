@@ -32,7 +32,7 @@ pipeline {
                 withPythonEnv('python') {
                     // Uses the default system installation of Python
                     // Equivalent to withPythonEnv('/usr/bin/python')
-                    pybat 'python --version'
+                    bat 'python --version'
                     bat 'pip install -e .'
 
                 }

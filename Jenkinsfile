@@ -22,6 +22,7 @@ pipeline {
                     }
                 }
                 bat 'pip install -r requirements.txt'
+                bat 'py -2 -m pip install -r requirements.txt'
                 bat 'virtualenv testProject'
                 bat 'testProject\\Scripts\\activate'
                 }
@@ -30,6 +31,7 @@ pipeline {
         stage('Build') {
             steps {
                 bat 'pip install -e . --user'
+                bat 'py -2 -m pip install -e . --user'
             }
             post {
                 success {

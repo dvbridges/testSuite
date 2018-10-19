@@ -26,35 +26,25 @@ pipeline {
                 //bat 'testProject\\Scripts\\activate'
                 }
             }
-
+        withPythonEnv('python3') {
         stage('Build') {
-            steps {
-                withPythonEnv('py -2') {
-                    // Uses the default system installation of Python
-                    // Equivalent to withPythonEnv('/usr/bin/python')
-                    bat 'python --version'
-                    bat 'pip install -e .'
 
+                steps {
+                    bat 'pip install -e . --user'
                 }
-
-            }
-            post {
-                success {
-                    archiveArtifacts '*.*'
+                post {
+                    success {
+                        archiveArtifacts '*.*'
+                    }
                 }
             }
-        }
+
 
         stage('Test') {
             steps {
-                withPythonEnv('python') {
-                    // Uses the default system installation of Python
-                    // Equivalent to withPythonEnv('/usr/bin/python')
-
-                    echo 'Testing..'
-                    bat 'pytest --cov-report xml:coverage.xml --cov=proj tests' // creates coverage doc
-                    bat 'pylint --exit-zero -f parseable -r y proj > pylint.out | type pylint.out' // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
-                }
+                echo 'Testing..'
+                bat 'pytest --cov-report xml:coverage.xml --cov=proj tests' // creates coverage doc
+                bat 'pylint --exit-zero -f parseable -r y proj > pylint.out | type pylint.out' // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
             }
 
             post {
@@ -81,11 +71,10 @@ pipeline {
     }
     post {
         always {
-            withPythonEnv('python') {
-                step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
-                step([$class: 'WarningsPublisher', parserConfigurations: [[parserName: 'PYLint', pattern: 'pylint.out']], unstableTotalHigh: '1', unstableTotalNormal: '30', unstableTotalLow: '100', usePreviousBuildAsReference: true])
-                // bat 'testProject\\Scripts\\deactivate'
-                }
+            step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
+            step([$class: 'WarningsPublisher', parserConfigurations: [[parserName: 'PYLint', pattern: 'pylint.out']], unstableTotalHigh: '1', unstableTotalNormal: '30', unstableTotalLow: '100', usePreviousBuildAsReference: true])
+            bat 'testProject\\Scripts\\deactivate'
             }
         }
     }
+}

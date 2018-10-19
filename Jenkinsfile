@@ -31,7 +31,7 @@ pipeline {
         stage('Install software') {
             steps {
                 bat 'py -2 setup.py develop'
-                bat 'pip install -e . --user'
+                bat 'python setup.py develop'
             }
             post {
                 success {

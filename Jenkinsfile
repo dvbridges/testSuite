@@ -21,7 +21,7 @@ pipeline {
                         echo "BRANCH: ${BRANCH}"
                     }
                 }
-                bat 'virtualenv testProject --no-site-packages'
+                bat 'virtualenv testProject --no-site-packages --relocatable'
                 bat 'pip install -r requirements.txt'
                 bat 'py -2 -m pip install -r requirements.txt'
                 bat 'testProject\\Scripts\\activate'
@@ -30,7 +30,7 @@ pipeline {
 
         stage('Install software') {
             steps {
-                bat 'py -2 -m pip install -e . --upgrade'
+                bat 'py -2 -m pip setup.py develop'
                 bat 'pip uninstall proj'
                 bat 'pip install -e . --user'
             }

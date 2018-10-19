@@ -30,8 +30,6 @@ pipeline {
 
         stage('Install software') {
             steps {
-
-
                 bat 'py -2 -m pip uninstall proj'
                 bat 'py -2 -m pip install -e . --user'
                 bat 'pip uninstall proj'

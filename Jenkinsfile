@@ -23,6 +23,7 @@ pipeline {
                 }
                 bat 'pip install -r requirements.txt'
                 bat 'py -2 -m pip install -r requirements.txt'
+                bat 'rmdir /Q /S testProject'
                 bat 'virtualenv testProject'
                 bat 'testProject\\Scripts\\activate'
                 }
@@ -30,9 +31,8 @@ pipeline {
 
         stage('Install software') {
             steps {
-                // bat "rmdir /Q /S C:\\Program Files (x86)\\Jenkins\\workspace\\testsuite-multibranch_pr-8-hqm4kvwznjmlbmtoyss5tisynlzeh57h3dmzfa7yu3rmmuoedh2a\\proj.egg-info"
                 bat 'py -2 -m pip uninstall proj'
-                bat 'py -2 -m pip install -e . --user'
+                bat 'py -2 -m pip install -e .'
                 bat 'pip uninstall proj'
                 bat 'pip install -e . --user'
             }

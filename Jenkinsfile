@@ -23,7 +23,7 @@ pipeline {
                 }
                 bat 'pip install -r requirements.txt'
                 bat 'py -2 -m pip install -r requirements.txt'
-                bat 'virtualenv --clear testProject'
+                bat 'rmdir /Q /S testProject'
                 bat 'virtualenv testProject'
                 bat 'testProject\\Scripts\\activate'
                 }

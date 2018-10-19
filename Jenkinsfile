@@ -45,10 +45,16 @@ pipeline {
 
         stage('Test') {
             steps {
+                withPythonEnv('python') {
+                    // Uses the default system installation of Python
+                    // Equivalent to withPythonEnv('/usr/bin/python')
+                    bat 'pip install -e .'
+
                 echo 'Testing..'
                 bat 'pytest --cov-report xml:coverage.xml --cov=proj tests' // creates coverage doc
                 bat 'pylint --exit-zero -f parseable -r y proj > pylint.out | type pylint.out' // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
             }
+        }
 
             post {
                 success {

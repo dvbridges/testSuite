@@ -32,7 +32,9 @@ pipeline {
                 withPythonEnv('python') {
                     // Uses the default system installation of Python
                     // Equivalent to withPythonEnv('/usr/bin/python')
-                    pybat 'pip install -e .'
+                    pybat 'python --version'
+                    bat 'pip install -e .'
+
                 }
 
             }
@@ -50,8 +52,8 @@ pipeline {
                     // Equivalent to withPythonEnv('/usr/bin/python')
 
                     echo 'Testing..'
-                    pybat 'pytest --cov-report xml:coverage.xml --cov=proj tests' // creates coverage doc
-                    pybat 'pylint --exit-zero -f parseable -r y proj > pylint.out | type pylint.out' // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
+                    bat 'pytest --cov-report xml:coverage.xml --cov=proj tests' // creates coverage doc
+                    bat 'pylint --exit-zero -f parseable -r y proj > pylint.out | type pylint.out' // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
                 }
             }
 

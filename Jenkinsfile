@@ -28,9 +28,8 @@ pipeline {
                 }
             }
 
-        stage('Build') {
+        stage('BuildPython2') {
             steps {
-                bat 'pip install -e . --user'
                 bat 'py -2 -m pip install -e . --user'
             }
             post {
@@ -39,13 +38,21 @@ pipeline {
                 }
             }
         }
-
-        stage('Test') {
+        stage('BuildPython3') {
             steps {
-                echo 'Testing..'
-                bat 'pytest --cov-report xml:coveragePy3.xml --cov=proj tests' // creates coverage doc
+                bat 'pip install -e . --user'
+            }
+            post {
+                success {
+                    archiveArtifacts '*.*'
+                }
+            }
+        }
+
+        stage('TestPython2') {
+            steps {
+                echo 'Testing Python 2...'
                 bat 'py -2 -m pytest --cov-report xml:coveragePy2.xml --cov=proj tests' // creates coverage doc
-                bat 'pylint --exit-zero -f parseable -r y proj > pylint.out | type pylint.out' // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
                 bat 'py -2 -m pylint --exit-zero -f parseable -r y proj > pylintpy2.out | type pylintpy2.out' // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
             }
 
@@ -55,7 +62,19 @@ pipeline {
                 }
             }
         }
+        stage('TestPython3') {
+            steps {
+                echo 'Testing Python 3...'
+                bat 'pytest --cov-report xml:coveragePy3.xml --cov=proj tests' // creates coverage doc
+                bat 'pylint --exit-zero -f parseable -r y proj > pylint.out | type pylint.out' // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
+            }
 
+            post {
+                success {
+                    archiveArtifacts 'proj/**/*.py, tests/**/*.py'  // Save all files ending with .py
+                }
+            }
+        }
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
@@ -73,10 +92,10 @@ pipeline {
     }
     post {
         always {
-            step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coveragePy3.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
             step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coveragePy2.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
-            step([$class: 'WarningsPublisher', parserConfigurations: [[parserName: 'PYLint', pattern: 'pylint.out']], unstableTotalHigh: '1', unstableTotalNormal: '30', unstableTotalLow: '100', usePreviousBuildAsReference: true])
+            step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coveragePy3.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
             step([$class: 'WarningsPublisher', parserConfigurations: [[parserName: 'PYLint', pattern: 'pylintpy2.out']], unstableTotalHigh: '1', unstableTotalNormal: '30', unstableTotalLow: '100', usePreviousBuildAsReference: true])
+            step([$class: 'WarningsPublisher', parserConfigurations: [[parserName: 'PYLint', pattern: 'pylint.out']], unstableTotalHigh: '1', unstableTotalNormal: '30', unstableTotalLow: '100', usePreviousBuildAsReference: true])
             bat 'testProject\\Scripts\\deactivate'
             }
         }

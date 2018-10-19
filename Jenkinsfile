@@ -30,6 +30,7 @@ pipeline {
 
         stage('Install software') {
             steps {
+                bat "rmdir ${env.WORKSPACE}\\testsuite-multibranch_pr-8-hqm4kvwznjmlbmtoyss5tisynlzeh57h3dmzfa7yu3rmmuoedh2a\\proj.egg-info /s"
                 bat 'py -2 -m pip uninstall proj'
                 bat 'py -2 -m pip install -e . --user'
                 bat 'pip uninstall proj'

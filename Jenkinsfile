@@ -21,15 +21,15 @@ pipeline {
                         echo "BRANCH: ${BRANCH}"
                     }
                 }
-                //bat 'pip install -r requirements.txt'
-                //bat 'virtualenv testProject'
-                //bat 'testProject\\Scripts\\activate'
+                bat 'pip install -r requirements.txt'
+                bat 'virtualenv testProject'
+                bat 'testProject\\Scripts\\activate'
                 }
             }
 
         stage('Build') {
             steps {
-                withPythonEnv('python') {
+                withPythonEnv('testProject') {
                     // Uses the default system installation of Python
                     // Equivalent to withPythonEnv('/usr/bin/python')
                     bat 'python --version'

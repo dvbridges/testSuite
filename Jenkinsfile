@@ -46,7 +46,7 @@ pipeline {
             }
             post {
                 success {
-                    archiveArtifacts '*.*'
+                    archiveArtifacts artifacts: '*.*', fingerprint: true // Save all files ending with .py
                 }
             }
         }
@@ -60,7 +60,7 @@ pipeline {
 
             post {
                 success {
-                    archiveArtifacts 'proj/**/*.py, tests/**/*.py'  // Save all files ending with .py
+                    archiveArtifacts artifacts: 'proj/**/*.py, tests/**/*.py', fingerprint: true
                 }
             }
         }
@@ -73,7 +73,7 @@ pipeline {
 
             post {
                 success {
-                    archiveArtifacts 'proj/**/*.py, tests/**/*.py'  // Save all files ending with .py
+                    archiveArtifacts artifacts: 'proj/**/*.py, tests/**/*.py', fingerprint: true  
                 }
             }
         }

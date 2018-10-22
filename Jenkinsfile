@@ -21,7 +21,13 @@ pipeline {
                         echo "BRANCH: ${BRANCH}"
                     }
                 }
-                bat 'virtualenv testProject --no-site-packages --relocatable'
+                script {
+                    try {
+                        bat 'virtualenv testProject --no-site-packages --relocatable'
+                    } catch(Exception e) {
+                        bat 'virtualenv testProject --no-site-packages'
+                    }
+                }
                 bat 'testProject\\Scripts\\activate'
                 bat 'pip install -r requirements.txt'
                 bat 'py -2 -m pip install -r requirements.txt'

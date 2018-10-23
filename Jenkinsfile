@@ -32,14 +32,6 @@ pipeline {
                 bat 'pip install -r requirements.txt'
                 bat 'py -2 -m pip install -r requirements.txt'
                 }
-
-                stages {
-                    stage('First nested stage') {
-                        steps {
-                            echo 'Welcome to the first nested stage'
-                        }
-                    }
-                }
             }
 
         stage('Install software') {
@@ -58,32 +50,37 @@ pipeline {
             }
         }
 
-        stage('Test Python 2') {
-            steps {
-                echo 'Testing Python 2...'
-                bat 'py -2 -m pytest --cov-report xml:coveragePy2.xml --cov=proj tests' // creates coverage doc
-                bat 'py -2 -m pylint --exit-zero -f parseable -r y proj > pylintpy2.out | type pylintpy2.out' // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
-            }
+        stage('Testing') {
+            stages {
+                stage('Test Python 2') {
+                    steps {
+                        echo 'Testing Python 2...'
+                        bat 'py -2 -m pytest --cov-report xml:coveragePy2.xml --cov=proj tests' // creates coverage doc
+                        bat 'py -2 -m pylint --exit-zero -f parseable -r y proj > pylintpy2.out | type pylintpy2.out' // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
+                    }
 
-            post {
-                success {
-                    archiveArtifacts 'proj/**/*.py, tests/**/*.py'  // Save all files ending with .py
+                    post {
+                        success {
+                            archiveArtifacts 'proj/**/*.py, tests/**/*.py'  // Save all files ending with .py
+                        }
+                    }
+                }
+                stage('Test Python 3') {
+                    steps {
+                        echo 'Testing Python 3...'
+                        bat 'pytest --cov-report xml:coveragePy3.xml --cov=proj tests' // creates coverage doc
+                        bat 'pylint --exit-zero -f parseable -r y proj > pylintpy3.out | type pylintpy3.out' // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
+                    }
+
+                    post {
+                        success {
+                            archiveArtifacts 'proj/**/*.py, tests/**/*.py'  // Save all files ending with .py
+                        }
+                    }
                 }
             }
         }
-        stage('Test Python 3') {
-            steps {
-                echo 'Testing Python 3...'
-                bat 'pytest --cov-report xml:coveragePy3.xml --cov=proj tests' // creates coverage doc
-                bat 'pylint --exit-zero -f parseable -r y proj > pylintpy3.out | type pylintpy3.out' // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
-            }
 
-            post {
-                success {
-                    archiveArtifacts 'proj/**/*.py, tests/**/*.py'  // Save all files ending with .py
-                }
-            }
-        }
 
         stage('Deploy') {
             when {

@@ -31,12 +31,12 @@ pipeline {
                 bat 'testProject\\Scripts\\activate'
                 bat 'pip install -r requirements.txt'
                 bat 'py -2 -m pip install -r requirements.txt'
+                }
 
                 stages {
                     stage('First nested stage') {
                         steps {
                             echo 'Welcome to the first nested stage'
-                            }
                         }
                     }
                 }

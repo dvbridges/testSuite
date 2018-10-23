@@ -51,7 +51,8 @@ pipeline {
         }
 
         stage('Testing') {
-            stages {
+            failFast true
+            parallel {
                 stage('Test Python 2') {
                     steps {
                         echo 'Testing Python 2...'

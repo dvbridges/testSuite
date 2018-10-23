@@ -37,7 +37,7 @@ pipeline {
         stage('Install software') {
             failFast true
             parallel {
-                stage('For Python 2') {
+                stage('Python 2') {
 
                     steps {
                         timeout(time: 3, unit: 'MINUTES') {
@@ -52,7 +52,7 @@ pipeline {
                         }
                     }
                 }
-                stage('For Python 3') {
+                stage('Python 3') {
 
                     steps {
                         timeout(time: 3, unit: 'MINUTES') {
@@ -73,7 +73,7 @@ pipeline {
         stage('Testing') {
             failFast true
             parallel {
-                stage('Test Python 2') {
+                stage('Python 2') {
                     steps {
                         echo 'Testing Python 2...'
                         bat 'py -2 -m pytest --cov-report xml:coveragePy2.xml --cov=proj tests' // creates coverage doc
@@ -86,7 +86,7 @@ pipeline {
                         }
                     }
                 }
-                stage('Test Python 3') {
+                stage('Python 3') {
                     steps {
                         echo 'Testing Python 3...'
                         bat 'pytest --cov-report xml:coveragePy3.xml --cov=proj tests' // creates coverage doc

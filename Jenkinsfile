@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Initialisation') {
             agent {
-                label 'Win10' }
+                label 'Windows' }
             steps {
                 echo 'Building..'
                 echo "Current build: ${currentBuild.number}";
@@ -31,7 +31,7 @@ pipeline {
 
         stage('Build') {
             agent {
-                label 'Win10' }
+                label 'Windows' }
             steps {
                 bat 'python -m pip install -e . --user'
             }
@@ -44,7 +44,7 @@ pipeline {
 
         stage('Test') {
             agent {
-                label 'Win10' }
+                label 'Windows' }
             steps {
                 echo 'Testing..'
                 bat 'pytest --cov-report xml:coverage.xml --cov=proj tests' // creates coverage doc

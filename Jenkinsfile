@@ -23,7 +23,7 @@ pipeline {
                         echo "BRANCH: ${BRANCH}"
                     }
                 }
-                bat 'python -m pip install -r requirements.txt'
+                bat 'python -m pip install -r requirements.txt --user'
                 bat 'virtualenv testProject'
                 bat 'testProject\\Scripts\\activate'
                 }

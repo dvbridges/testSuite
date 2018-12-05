@@ -40,33 +40,34 @@ pipeline {
                 label 'Win10'
             }
             failFast true
-            stage('Python 2') {
-
-                steps {
-                    timeout(time: 3, unit: 'MINUTES') {
-                        retry(5) {
-                            bat 'py -2 setup.py develop'
+            stages {
+                stage('Python 2') {
+                    steps {
+                        timeout(time: 3, unit: 'MINUTES') {
+                            retry(5) {
+                                bat 'py -2 setup.py develop'
+                            }
+                        }
+                    }
+                    post {
+                        success {
+                            archiveArtifacts artifacts: '*.*', fingerprint: true // Save all files ending with .py
                         }
                     }
                 }
-                post {
-                    success {
-                        archiveArtifacts artifacts: '*.*', fingerprint: true // Save all files ending with .py
-                    }
-                }
-            }
-            stage('Python 3') {
+                stage('Python 3') {
 
-                steps {
-                    timeout(time: 3, unit: 'MINUTES') {
-                        retry(5) {
-                            bat 'python setup.py develop --user'
+                    steps {
+                        timeout(time: 3, unit: 'MINUTES') {
+                            retry(5) {
+                                bat 'python setup.py develop --user'
+                            }
                         }
                     }
-                }
-                post {
-                    success {
-                        archiveArtifacts artifacts: '*.*', fingerprint: true // Save all files ending with .py
+                    post {
+                        success {
+                            archiveArtifacts artifacts: '*.*', fingerprint: true // Save all files ending with .py
+                        }
                     }
                 }
             }

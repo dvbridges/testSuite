@@ -1,11 +1,12 @@
 pipeline {
-    agent none
+    agent any
     environment {
         BRANCH = "${env.BRANCH_NAME}"
     }
     stages {
         stage('Initialisation') {
-            agent any
+            agent {
+                label 'Win10' }
             steps {
                 echo 'Building..'
                 echo "Current build: ${currentBuild.number}";
@@ -22,89 +23,42 @@ pipeline {
                         echo "BRANCH: ${BRANCH}"
                     }
                 }
-                script {
-                    try {
-                        bat 'virtualenv testProject --no-site-packages --relocatable'
-                    } catch(Exception e) {
-                        bat 'virtualenv testProject --no-site-packages'
-                    }
-                }
-                bat 'testProject\\Scripts\\activate'
                 bat 'pip install -r requirements.txt'
-                bat 'py -2 -m pip install -r requirements.txt'
+                bat 'virtualenv testProject'
+                bat 'testProject\\Scripts\\activate'
                 }
             }
 
-        stage('Python 2') {
+        stage('Build') {
             agent {
-            label 'Win10'
-            }
+                label 'Win10' }
             steps {
-                timeout(time: 3, unit: 'MINUTES') {
-                    retry(5) {
-                        bat 'py -2 setup.py develop'
-                    }
-                }
+                bat 'pip install -e . --user'
             }
             post {
                 success {
-                    archiveArtifacts artifacts: '*.*', fingerprint: true // Save all files ending with .py
+                    archiveArtifacts '*.*'
                 }
             }
         }
-        stage('Python 3') {
+
+        stage('Test') {
             agent {
-                label 'Win10'
-                }
+                label 'Win10' }
             steps {
-                timeout(time: 3, unit: 'MINUTES') {
-                    retry(5) {
-                        bat 'python setup.py develop --user'
-                    }
-                }
+                echo 'Testing..'
+                bat 'pytest --cov-report xml:coverage.xml --cov=proj tests' // creates coverage doc
+                bat 'pylint --exit-zero -f parseable -r y proj > pylint.out | type pylint.out' // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
             }
+
             post {
                 success {
-                    archiveArtifacts artifacts: '*.*', fingerprint: true // Save all files ending with .py
-                }
-            }
-
-        stage('Testing') {
-            failFast true
-            parallel {
-                stage('Python 2') {
-                    steps {
-                        echo 'Testing Python 2...'
-                        bat 'py -2 -m pytest --cov-report xml:coveragePy2.xml --cov=proj tests' // creates coverage doc
-                        bat 'py -2 -m pylint --exit-zero -f parseable -r y proj > pylintpy2.out | type pylintpy2.out' // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
-                    }
-
-                    post {
-                        success {
-                            archiveArtifacts 'proj/**/*.py, tests/**/*.py'  // Save all files ending with .py
-                        }
-                    }
-                }
-                stage('Python 3') {
-                    steps {
-                        echo 'Testing Python 3...'
-                        bat 'pytest --cov-report xml:coveragePy3.xml --cov=proj tests' // creates coverage doc
-                        bat 'pylint --exit-zero -f parseable -r y proj > pylintpy3.out | type pylintpy3.out' // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
-                    }
-
-                    post {
-                        success {
-                            archiveArtifacts 'proj/**/*.py, tests/**/*.py'  // Save all files ending with .py
-                        }
-                    }
+                    archiveArtifacts 'proj/**/*.py, tests/**/*.py'  // Save all files ending with .py
                 }
             }
         }
 
         stage('Deploy') {
-            when {
-                branch 'master'
-            }
             steps {
                 echo 'Deploying....'
                 echo "Use env.BRANCH_NAME (${env.BRANCH_NAME}) in case you wish to deploy to production from master but not from feature branches"
@@ -119,16 +73,11 @@ pipeline {
             }
         }
     }
-
     post {
         always {
-            echo 'See https://jenkins.io/doc/pipeline/steps/cobertura/ for Cobertura plugin options.'
-            step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coveragePy2.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
-            step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coveragePy3.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
-            step([$class: 'WarningsPublisher', parserConfigurations: [[parserName: 'PYLint', pattern: 'pylintpy2.out']], unstableTotalHigh: '1', unstableTotalNormal: '30', unstableTotalLow: '100', usePreviousBuildAsReference: true])
-            step([$class: 'WarningsPublisher', parserConfigurations: [[parserName: 'PYLint', pattern: 'pylintpy3.out']], unstableTotalHigh: '1', unstableTotalNormal: '30', unstableTotalLow: '100', usePreviousBuildAsReference: true])
+            step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
+            step([$class: 'WarningsPublisher', parserConfigurations: [[parserName: 'PYLint', pattern: 'pylint.out']], unstableTotalHigh: '1', unstableTotalNormal: '30', unstableTotalLow: '100', usePreviousBuildAsReference: true])
             bat 'testProject\\Scripts\\deactivate'
             }
         }
     }
-}

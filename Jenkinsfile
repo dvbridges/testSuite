@@ -23,7 +23,7 @@ pipeline {
                         echo "BRANCH: ${BRANCH}"
                     }
                 }
-                bat 'pip install -r requirements.txt'
+                bat 'python -m pip install -r requirements.txt'
                 bat 'virtualenv testProject'
                 bat 'testProject\\Scripts\\activate'
                 }
@@ -33,7 +33,7 @@ pipeline {
             agent {
                 label 'Win10' }
             steps {
-                bat 'pip install -e . --user'
+                bat 'python -m pip install -e . --user'
             }
             post {
                 success {

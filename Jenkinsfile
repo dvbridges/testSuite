@@ -7,6 +7,14 @@ import windows.*
 
 // instantiate
 pl = new pipeline()
-// work
-pl.build()
-pl.test(regression)
+node {
+    checkout scm
+    stage('Build') {
+        echo 'Building....'
+        pl.build()
+    }
+    stage('Test') {
+        echo 'Building....'
+        pl.test(regression)
+    }
+}

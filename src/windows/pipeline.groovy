@@ -1,5 +1,5 @@
 src/io/abc/pipeline.groovy
-#!/usr/bin/groovy
+
 package io.abc;
 
 def build() {

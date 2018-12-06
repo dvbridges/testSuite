@@ -57,6 +57,24 @@ pipeline {
                 }
             }
         }
+        
+        stage('Publish test results') {
+            agent {
+                label 'Windows' }
+            steps {
+                echo 'Testing..'
+                bat 'python -m pytest --cov-report xml:coverage.xml --cov=proj tests' // creates coverage doc
+                bat 'python -m pylint --exit-zero -f parseable -r y proj > pylint.out | type pylint.out' // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
+            }
+
+            post {
+                success {
+                    tep([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
+                    step([$class: 'WarningsPublisher', parserConfigurations: [[parserName: 'PYLint', pattern: 'pylint.out']], unstableTotalHigh: '1', unstableTotalNormal: '30', unstableTotalLow: '100', usePreviousBuildAsReference: true])
+                    bat 'testProject\\Scripts\\deactivate'
+                }
+            }
+        }
 
         stage('Deploy') {
             steps {
@@ -73,13 +91,4 @@ pipeline {
             }
         }
     }
-    post {
-        agent {
-                label 'Windows' }
-        always {
-            step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
-            step([$class: 'WarningsPublisher', parserConfigurations: [[parserName: 'PYLint', pattern: 'pylint.out']], unstableTotalHigh: '1', unstableTotalNormal: '30', unstableTotalLow: '100', usePreviousBuildAsReference: true])
-            bat 'testProject\\Scripts\\deactivate'
-            }
-        }
-    }
+}

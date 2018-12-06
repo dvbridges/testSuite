@@ -17,10 +17,11 @@ pipeline {
                 echo "Jenkins node name: ${env.NODE_NAME}"
                 echo 'Checking parameters...'  // Example of scripting in declarative pipeline
                 script {
+                    checkout scm
                     def rootDir = pwd()
-                    def cl = load "${rootDir}@script/winText.groovy"
-                    c1.A("new A Class")
-                    c1.B("new B Class")
+                    def cl = load "${rootDir}/winText.groovy"
+                    //c1.A("new A Class")
+                    //c1.B("new B Class")
                     if (BRANCH == 'master') {
                         echo "BRANCH: 'master'"
                     } else if (BRANCH != 'master') {

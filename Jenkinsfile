@@ -22,7 +22,12 @@ stage('Build') {
         }
     }
 
-
+stage('Test') {
+    node('Windows') {
+        p1.test('python')
+        p1.test('py -2')
+        }
+    }
 
 
 

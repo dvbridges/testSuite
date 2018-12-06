@@ -10,6 +10,7 @@ def initialize(python, pyEnv) {
     echo "Jenkins home directory: ${env.JENKINS_HOME}"
     echo "Jenkins node name: ${env.NODE_NAME}"
     echo 'Checking parameters...'  // Example of scripting in declarative pipeline
+    bat "rmdir /s /q ${pyEnv}"
     bat "${python} -m pip install -r requirements.txt --user"
     bat "${python} -m virtualenv ${pyEnv}"
     bat "${pyEnv}\\Scripts\\activate"

@@ -1,4 +1,4 @@
-Jenkinsfile
+//Jenkinsfile
 // import
 //@Library("shared_library@master")
 

@@ -13,7 +13,7 @@ def initialize(python, pyEnv) {
     bat "rmdir /s /q ${pyEnv}"
     bat "${python} -m pip install -r requirements.txt --user"
     bat "${python} -m virtualenv ${pyEnv}"
-    bat "cd ${pyEnv}\\Scripts\\activate & activate"
+    bat "cd ${pyEnv}\\Scripts & activate"
     bat "${python} -m pip list"
     bat "${python} --version"
 }

@@ -40,7 +40,7 @@ def publish(pyEnv) {
 }
 
 def deactivate(pyEnv) {
-    bat "cd ${pyEnv}\\Scripts & deactivate"
+    bat "deactivate"
 }
 
 // AimTheory have a recommendation and explanation about this here

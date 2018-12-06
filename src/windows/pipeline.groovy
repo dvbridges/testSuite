@@ -26,10 +26,15 @@ def build(python) {
     bat "${python} setup.py develop --user"
     }    
     
-def test(python) {
-    bat "${python} -m pytest --cov-report xml:coveragePy2.xml --cov=proj tests" // creates coverage doc
-        "${python} -m pylint --exit-zero -f parseable -r y proj > pylint.out | type pylint.out" // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
+def test(python, pyEnv) {
+    bat "${python} -m pytest --cov-report xml:coverage${pyEnv}.xml --cov=proj tests" // creates coverage doc
+    bat "${python} -m pylint --exit-zero -f parseable -r y proj > pylint${pyEnv}.out | type pylint${pyEnv}.out" // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
     }
+
+def publish(pyEnv) {
+    step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage${pyEnv}.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
+    step([$class: 'WarningsPublisher', parserConfigurations: [[parserName: 'PYLint', pattern: 'pylint${pyEnv}.out']], unstableTotalHigh: '1', unstableTotalNormal: '30', unstableTotalLow: '100', usePreviousBuildAsReference: true])
+}
 
 // AimTheory have a recommendation and explanation about this here
 return this

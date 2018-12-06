@@ -24,11 +24,16 @@ stage('Build') {
 
 stage('Test') {
     node('Windows') {
-        p1.test('python')
-        p1.test('py -2')
+        p1.test('python', 'py3')
+        p1.test('py -2', 'py2')
         }
     }
 
-
+stage('Publish') {
+    node('Windows') {
+        p1.publish('py3')
+        p1.publish('py2')
+        }
+    }
 
 

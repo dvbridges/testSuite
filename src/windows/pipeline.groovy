@@ -24,6 +24,10 @@ def initialize(python, pyEnv) {
 }
 def build(python) {
     bat "${python} setup.py develop --user"
+    
+def test(python) {
+    bat "${python} -m pytest --cov-report xml:coveragePy2.xml --cov=proj tests" // creates coverage doc
+}
 
 }
 

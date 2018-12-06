@@ -1,6 +1,6 @@
-src/io/abc/pipeline.groovy
+src/windows/pipeline.groovy
 
-package io.abc;
+package windows;
 
 def build() {
   bat "dir /w"

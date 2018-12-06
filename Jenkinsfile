@@ -18,8 +18,8 @@ pipeline {
                 echo 'Checking parameters...'  // Example of scripting in declarative pipeline
                 script {
                     def cl = load 'winText.groovy'
-                    echo "winText class: ${c1}"
-                    
+                    c1.A("new A Class")
+                    c1.B("new B Class")
                     if (BRANCH == 'master') {
                         echo "BRANCH: 'master'"
                     } else if (BRANCH != 'master') {

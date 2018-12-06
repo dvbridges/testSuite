@@ -17,7 +17,8 @@ pipeline {
                 echo "Jenkins node name: ${env.NODE_NAME}"
                 echo 'Checking parameters...'  // Example of scripting in declarative pipeline
                 script {
-                    def cl = load 'winText.groovy'
+                    def rootDir = pwd()
+                    def cl = load "${rootDir}@script/winText.groovy"
                     c1.A("new A Class")
                     c1.B("new B Class")
                     if (BRANCH == 'master') {

@@ -20,6 +20,7 @@ pipeline {
                     def rootDir = pwd()
                     def cl = load "${rootDir}/winText.groovy"
                     c1.greeting()
+                    
                     if (BRANCH == 'master') {
                         echo "BRANCH: 'master'"
                     } else if (BRANCH != 'master') {

@@ -1,5 +1,5 @@
 def greeting() {
-    println("exampleMethod")
+    echo "exampleMethod"
 }
 
 return this

@@ -1,20 +1,18 @@
-//Jenkinsfile
+Jenkinsfile
 // import
 //@Library("shared_library@master")
 
 import windows.*
 
 // instantiate
-
-node('Windows') {
-    checkout scm
-    try {
+stage('Build') {
+    node('Windows') {
+        checkout scm
         p1 = pipeline()
         echo 'Building....'
         pl.build()
         }
     }
-
 
 
 

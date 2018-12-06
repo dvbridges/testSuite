@@ -36,10 +36,3 @@ stage('Publish') {
         }
     }
 
-stage('Deactivate venv') {
-    node('Windows') {
-        pipeLine.deactivate('py2')
-        pipeLine.deactivate('py3')
-        }
-}
-

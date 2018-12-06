@@ -1,7 +1,7 @@
 //src/windows/pipeline.groovy
 package windows;
 
-def build() {
+def initialize(python) {
     echo 'Building..'
     echo "Current build: ${currentBuild.number}";
     echo "Current build start time: ${currentBuild.startTimeInMillis}"
@@ -10,7 +10,9 @@ def build() {
     echo "Jenkins home directory: ${env.JENKINS_HOME}"
     echo "Jenkins node name: ${env.NODE_NAME}"
     echo 'Checking parameters...'  // Example of scripting in declarative pipeline
-    bat "dir /w"
+    bat '${python} -m pip install -r requirements.txt --user'
+    bat 'virtualenv testProject'
+    bat 'testProject\\Scripts\\activate'
 }
 def test(name) {
   bat "dir"

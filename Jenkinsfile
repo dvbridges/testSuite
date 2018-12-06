@@ -9,7 +9,7 @@ stage('Build') {
         checkout scm
         p1 = new pipeline()
         echo 'Building....'
-        p1.build()
+        p1.initialize('python')
         }
     }
 

@@ -26,8 +26,9 @@ pipeline {
                 bat 'python -m pip install -r requirements.txt --user'
                 bat 'virtualenv testProject'
                 bat 'testProject\\Scripts\\activate'
-                def importText = load 'winText'
-                importText
+                def cl = load 'winText.groovy'
+                def a = cl.getProperty('A')
+                echo a.greet("world A")
                 }
             }
 

@@ -1,7 +1,7 @@
 //src/windows/pipeline.groovy
 package windows;
 
-def initialize(python) {
+def initialize(python, env) {
     echo 'Building..'
     echo "Current build: ${currentBuild.number}";
     echo "Current build start time: ${currentBuild.startTimeInMillis}"
@@ -11,20 +11,12 @@ def initialize(python) {
     echo "Jenkins node name: ${env.NODE_NAME}"
     echo 'Checking parameters...'  // Example of scripting in declarative pipeline
     bat "${python} -m pip install -r requirements.txt --user"
-    try {
-        bat 'virtualenv testProject --no-site-packages --relocatable'
-        } catch(Exception e) {
-        bat 'virtualenv testProject --no-site-packages'
-       }
+    bat "${python} -m virtualenv ${env}"
     bat 'testProject\\Scripts\\activate'
 }
 def build(python) {  
-    try {
-        bat "${python} -m pip install -e ."
-    } catch(Exception e) {
-        bat "${python} removeEgg.py"
-        bat "${python} -m pip install -e ."
-    }
+    bat "${python} -m pip install -e ."
+
 }
 
 // AimTheory have a recommendation and explanation about this here

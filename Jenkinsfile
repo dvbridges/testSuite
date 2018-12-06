@@ -26,7 +26,7 @@ pipeline {
                 bat 'python -m pip install -r requirements.txt --user'
                 bat 'virtualenv testProject'
                 bat 'testProject\\Scripts\\activate'
-                importText = load 'winText'
+                def importText = load 'winText'
                 importText
                 }
             }

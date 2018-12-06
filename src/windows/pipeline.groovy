@@ -12,7 +12,7 @@ def initialize(python, pyEnv) {
     echo 'Checking parameters...'  // Example of scripting in declarative pipeline
     bat "${python} -m pip install -r requirements.txt --user"
     bat "${python} -m virtualenv ${pyEnv}"
-    bat '${pyEnv}\\Scripts\\activate'
+    bat "${pyEnv}\\Scripts\\activate"
 }
 def build(python) {  
     bat "${python} -m pip install -e ."

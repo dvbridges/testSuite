@@ -24,7 +24,7 @@ def build(python) {
     } catch(Exception e) {
         bat "${python} removeEgg.py"
         "${python} -m pip install -e ."
-    
+    }
 }
 
 // AimTheory have a recommendation and explanation about this here

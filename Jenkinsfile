@@ -20,8 +20,8 @@ pipeline {
                     checkout scm
                     def rootDir = pwd()
                     def cl = load "${rootDir}/winText.groovy"
-                    //c1.A("new A Class")
-                    //c1.B("new B Class")
+                    c1.A("new A Class")
+                    c1.B("new B Class")
                     if (BRANCH == 'master') {
                         echo "BRANCH: 'master'"
                     } else if (BRANCH != 'master') {

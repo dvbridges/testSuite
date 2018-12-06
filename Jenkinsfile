@@ -16,10 +16,11 @@ pipeline {
                 echo "Jenkins home directory: ${env.JENKINS_HOME}"
                 echo "Jenkins node name: ${env.NODE_NAME}"
                 echo 'Checking parameters...'  // Example of scripting in declarative pipeline
+                def rootDir = pwd()
+                def cl = load "${rootDir}/winText.groovy"
+                c1.greeting()
                 script {
-                    def rootDir = pwd()
-                    def cl = load "${rootDir}/winText.groovy"
-                    c1.greeting()
+                    
                     
                     if (BRANCH == 'master') {
                         echo "BRANCH: 'master'"

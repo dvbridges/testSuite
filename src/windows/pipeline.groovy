@@ -27,7 +27,7 @@ def build(python) {
     }    
     
 def test(python, pyEnv) {
-    bat "${python} -m pytest --cov-report xml:coverage${pyEnv.toLowerCase()}.xml --cov=proj tests" // creates coverage doc
+    bat "${python} -m pytest --cov-report xml:coverage${pyEnv}.xml --cov=proj tests" // creates coverage doc
     bat "${python} -m pylint --exit-zero -f parseable -r y proj > pylint${pyEnv}.out | type pylint${pyEnv}.out" // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
     }
 

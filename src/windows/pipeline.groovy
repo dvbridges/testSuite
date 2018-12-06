@@ -15,7 +15,7 @@ def initialize(python) {
     bat 'testProject\\Scripts\\activate'
 }
 def build(python) {
-  bat "${python} -m pip install -e . --user'
+  bat "${python} -m pip install -e . --user"
 }
 
 // AimTheory have a recommendation and explanation about this here

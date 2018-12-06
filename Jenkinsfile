@@ -9,7 +9,7 @@ stage('Build') {
         checkout scm
         p1 = new pipeline()
         echo 'Building....'
-        pl.build()
+        p1.build()
         }
     }
 

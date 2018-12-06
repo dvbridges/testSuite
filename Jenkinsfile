@@ -6,15 +6,15 @@ Jenkinsfile
 import windows.*
 
 // instantiate
-pl = new pipeline()
-node {
-    checkout scm
-    stage('Build') {
+stage('Build') {
+    node('Windows') {
+        checkout scm
+        p1 = pipeline()
         echo 'Building....'
         pl.build()
+        }
     }
-    stage('Test') {
-        echo 'Building....'
-        pl.test(regression)
-    }
-}
+
+
+
+

@@ -2,6 +2,8 @@ pipeline {
     agent any
     environment {
         BRANCH = "${env.BRANCH_NAME}"
+        def cl = load 'winText.groovy'
+        def a = cl.getProperty('A')
     }
     stages {
         stage('Initialisation') {
@@ -26,8 +28,6 @@ pipeline {
                 bat 'python -m pip install -r requirements.txt --user'
                 bat 'virtualenv testProject'
                 bat 'testProject\\Scripts\\activate'
-                def cl = load 'winText.groovy'
-                def a = cl.getProperty('A')
                 echo a.greet("world A")
                 }
             }

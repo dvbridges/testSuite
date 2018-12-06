@@ -1,5 +1,5 @@
 src/windows/pipeline.groovy
-#!/usr/bin/groovy
+
 package windows;
 
 def build() {

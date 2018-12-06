@@ -11,11 +11,11 @@ def initialize(python) {
     echo "Jenkins node name: ${env.NODE_NAME}"
     echo 'Checking parameters...'  // Example of scripting in declarative pipeline
     bat "${python} -m pip install -r requirements.txt --user"
-    //try {
-    //    bat 'virtualenv testProject --no-site-packages --relocatable'
-    //    } catch(Exception e) {
-    //    bat 'virtualenv testProject --no-site-packages'
-    //   }
+    try {
+        bat 'virtualenv testProject --no-site-packages --relocatable'
+        } catch(Exception e) {
+        bat 'virtualenv testProject --no-site-packages'
+       }
     bat 'testProject\\Scripts\\activate'
 }
 def build(python) {  
@@ -23,7 +23,7 @@ def build(python) {
         bat "${python} -m pip install -e ."
     } catch(Exception e) {
         bat "${python} removeEgg.py"
-        "${python} -m pip install -e ."
+        bat "${python} -m pip install -e ."
     }
 }
 

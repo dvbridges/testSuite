@@ -14,8 +14,8 @@ def initialize(python) {
     bat 'virtualenv testProject'
     bat 'testProject\\Scripts\\activate'
 }
-def test(name) {
-  bat "dir"
+def build(python) {
+  bat "${python} -m pip install -e . --user'
 }
 
 // AimTheory have a recommendation and explanation about this here

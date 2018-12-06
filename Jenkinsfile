@@ -4,7 +4,7 @@
 import windows.*
 
 // instantiate
-stage('Build') {
+stage('init') {
     node('Windows') {
         checkout scm
         p1 = new pipeline()
@@ -14,6 +14,14 @@ stage('Build') {
         p1.initialize('python')       
         }
     }
+
+stage('Build') {
+    node('Windows') {
+        p1.build('python')
+        p1.build('py -2')
+        }
+    }
+
 
 
 

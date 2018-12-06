@@ -15,7 +15,7 @@ def initialize(python, pyEnv) {
     bat "${pyEnv}\\Scripts\\activate"
 }
 def build(python) {  
-    bat "${python} -m pip install -e ."
+    bat "${python} -m pip install -e . --user"
 
 }
 

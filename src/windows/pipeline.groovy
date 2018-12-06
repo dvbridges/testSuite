@@ -23,7 +23,7 @@ def initialize(python, pyEnv) {
     bat "${python} --version"
 }
 def build(python) {
-    bat "${python} setup.py develop"
+    bat "${python} setup.py develop --user"
 
 }
 

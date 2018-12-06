@@ -2,8 +2,6 @@ pipeline {
     agent any
     environment {
         BRANCH = "${env.BRANCH_NAME}"
-        def cl = load 'winText.groovy'
-        def a = cl.getProperty('A')
     }
     stages {
         stage('Initialisation') {
@@ -19,6 +17,10 @@ pipeline {
                 echo "Jenkins node name: ${env.NODE_NAME}"
                 echo 'Checking parameters...'  // Example of scripting in declarative pipeline
                 script {
+                    def cl = load 'winText.groovy'
+                    def a = cl.getProperty('A')
+                    echo a.greet("world A")
+                    
                     if (BRANCH == 'master') {
                         echo "BRANCH: 'master'"
                     } else if (BRANCH != 'master') {
@@ -28,7 +30,6 @@ pipeline {
                 bat 'python -m pip install -r requirements.txt --user'
                 bat 'virtualenv testProject'
                 bat 'testProject\\Scripts\\activate'
-                echo a.greet("world A")
                 }
             }
 

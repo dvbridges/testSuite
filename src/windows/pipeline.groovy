@@ -39,5 +39,9 @@ def publish(pyEnv) {
     step([$class: 'WarningsPublisher', parserConfigurations: [[parserName: 'PYLint', pattern: "pylint${pyEnv}.out"]], unstableTotalHigh: '1', unstableTotalNormal: '30', unstableTotalLow: '100', usePreviousBuildAsReference: true])
 }
 
+def deactivate(pyEnv) {
+    bat "cd ${pyEnv}\\Scripts & deactivate"
+}
+
 // AimTheory have a recommendation and explanation about this here
 return this

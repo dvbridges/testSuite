@@ -1,6 +1,6 @@
 Jenkinsfile
 // import
-@Library("shared_libs")
+@Library("shared_libs@master")
 
 
 import windows.*

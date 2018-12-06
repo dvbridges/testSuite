@@ -3,12 +3,12 @@
 //@Library("shared_library@master")
 
 import windows.*
-
+p1 = pipeline()
 // instantiate
 stage('Build') {
     node('Windows') {
         checkout scm
-        p1 = pipeline()
+        
         echo 'Building....'
         pl.build()
         }

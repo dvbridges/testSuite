@@ -11,11 +11,15 @@ def initialize(python) {
     echo "Jenkins node name: ${env.NODE_NAME}"
     echo 'Checking parameters...'  // Example of scripting in declarative pipeline
     bat "${python} -m pip install -r requirements.txt --user"
-    bat 'virtualenv testProject '
+    try {
+        bat 'virtualenv testProject --no-site-packages --relocatable'
+        } catch(Exception e) {
+        bat 'virtualenv testProject --no-site-packages'
+        }
     bat 'testProject\\Scripts\\activate'
 }
-def build(python) {
-  bat "${python} -m pip install -e ."
+def build(python) {   
+    bat "${python} -m pip install -e ."
 }
 
 // AimTheory have a recommendation and explanation about this here

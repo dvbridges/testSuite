@@ -21,13 +21,14 @@ def initialize(python, pyEnv) {
     bat "cd ${pyEnv}\\Scripts & activate"
     bat "${python} -m pip list"
     bat "${python} --version"
-}
+    }
 def build(python) {
     bat "${python} setup.py develop --user"
-    
+    }    
 def test(python) {
     bat "${python} -m pytest --cov-report xml:coveragePy2.xml --cov=proj tests" // creates coverage doc
-}
+        "${python} -m pylint --exit-zero -f parseable -r y proj > pylint.out | type pylint.out" // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
+    }
 
 }
 

@@ -1,5 +1,5 @@
 //src/windows/pipeline.groovy
-package windows/;
+package windows;
 
 def build() {
   bat "dir /w"

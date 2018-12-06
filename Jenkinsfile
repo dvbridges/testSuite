@@ -31,6 +31,7 @@ stage('Test') {
 
 stage('Publish') {
     node('Windows') {
+        echo 'dir /w'
         p1.publish('py3')
         p1.publish('py2')
         }

@@ -32,6 +32,7 @@ def test(python, pyEnv) {
     }
 
 def publish(pyEnv) {
+    echo 'dir /w'
     step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: "coverage${pyEnv}.xml", failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
     step([$class: 'WarningsPublisher', parserConfigurations: [[parserName: 'PYLint', pattern: "pylint${pyEnv}.out"]], unstableTotalHigh: '1', unstableTotalNormal: '30', unstableTotalLow: '100', usePreviousBuildAsReference: true])
 }

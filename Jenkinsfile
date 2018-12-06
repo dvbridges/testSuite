@@ -3,7 +3,7 @@ Jenkinsfile
 @Library("shared_libs")
 
 
-import windows*
+import windows.*
 
 // instantiate
 pl = new pipeline()

@@ -18,7 +18,6 @@ def initialize(python, pyEnv) {
     bat "${python} --version"
 }
 def build(python) {
-    bat "${pyEnv}\\Scripts\\activate"  
     bat "${python} -m pip install -e . --user"
 
 }

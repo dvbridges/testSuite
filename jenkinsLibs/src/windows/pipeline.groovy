@@ -1,5 +1,5 @@
 //src/windows/pipeline.groovy
-package windows;
+package jenkinsLibs/windows;
 
 def initialize(python, pyEnv) {
     echo 'Building..'
@@ -39,9 +39,6 @@ def publish(pyEnv) {
     step([$class: 'WarningsPublisher', parserConfigurations: [[parserName: 'PYLint', pattern: "pylint${pyEnv}.out"]], unstableTotalHigh: '1', unstableTotalNormal: '30', unstableTotalLow: '100', usePreviousBuildAsReference: true])
 }
 
-def deactivate(pyEnv) {
-    bat "deactivate"
-}
 
 // AimTheory have a recommendation and explanation about this here
 return this

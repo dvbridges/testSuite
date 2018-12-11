@@ -1,7 +1,8 @@
 // import
 //@Library("shared_library@master")
 
-import windows.*
+import jenkinsLibs/windows.*
+import jenkinsLibs/linux.*
 
 // instantiate
 stage('init') {
@@ -11,7 +12,7 @@ stage('init') {
         echo 'Building Python 2'
         pipeLine.initialize('py -2', 'py2Env')
         echo 'Building Python 3'
-        pipeLine.initialize('python', 'py3Env')       
+        pipeLine.initialize('python', 'py3Env')
         }
     }
 

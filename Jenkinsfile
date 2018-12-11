@@ -4,7 +4,7 @@ import linux.*
 
 // instantiate
 parallel {
-    stage("Windows 10) {
+    stage('Windows 10') {
         stage('initWin') {
             node('Windows') {
                 checkout scm

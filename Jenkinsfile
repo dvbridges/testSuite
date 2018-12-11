@@ -1,8 +1,8 @@
 // import
 //@Library("shared_library@master")
 
-import jenkinsLibs/windows.*
-import jenkinsLibs/linux.*
+import jenkinsLibs.windows.*
+import jenkinsLibs.linux.*
 
 // instantiate
 stage('init') {

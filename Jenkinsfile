@@ -28,6 +28,7 @@ stage ('Initialize') {
                 }
             }
         }
+    }
 
 stage ('Build') {
     parallel windows: {
@@ -71,18 +72,18 @@ stage ('Test') {
 stage ('Publish') {     
     parallel windows: {
         stage('PublishWin10') {
-                node('Windows') {
-                    pipeLine.publish('py2')
-                    pipeLine.publish('py3')
-                    }
+            node('Windows') {
+                pipeLine.publish('py2')
+                pipeLine.publish('py3')
                 }
-            },
+            }
+        },
     linux : {
         stage('PublishLinux') {
             node('Linux') {
-                    linuxPipeLine.publish('py2')
-                    linuxPipeLine.publish('py3')
-                    }
+                linuxPipeLine.publish('py2')
+                linuxPipeLine.publish('py3')
                 }
             }
         }
+    }

@@ -30,7 +30,7 @@ def test(python, pyEnv) {
     sh "cat > pylint${pyEnv}.out"
     sh "chmod 777 pylint${pyEnv}.out"
     sh "${python} -m pytest --cov-report xml:coverage${pyEnv}.xml --cov=proj tests" // creates coverage doc
-    sh "${python} -m pylint --exit-zero -f parseable -r y proj >> /pylint${pyEnv}.out" // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
+    sh "${python} -m pylint --exit-zero -f parseable -r y proj >> pylint${pyEnv}.out" // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
     }
 
 def publish(pyEnv) {

@@ -34,7 +34,6 @@ def test(python, pyEnv) {
     }
 
 def publish(pyEnv) {
-    sh 'dir /w'
     echo "${env.JENKINS_HOME}"
     echo "${env.WORKSPACE}"
     step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: "**/*${pyEnv}.xml", failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])

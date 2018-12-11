@@ -3,8 +3,8 @@ import windows.*
 import linux.*
 
 // instantiate
-parallel {
-    stage('Windows 10') {
+stage ('Test all') {
+    parallel windows: {
         stage('initWin') {
             node('Windows') {
                 checkout scm
@@ -36,8 +36,8 @@ parallel {
                 pipeLine.publish('py3')
                 }
             }
-        }
-    stage('Linux Ubuntu 18.04') {
+        },
+    linux: {
         stage('initLinux') {
             node('Linux') {
                 checkout scm

@@ -22,6 +22,7 @@ def initialize(python, pyEnv) {
     sh "${python} -m pip list"
     sh "${python} --version"
     }
+    
 def build(python) {
     sh "${python} setup.py develop --user"
     }    

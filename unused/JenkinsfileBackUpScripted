@@ -2,8 +2,8 @@
 import windows.*
 import linux.*
 
-
-stage ('Initialize') {
+// instantiate
+stage ('Test all') {
     parallel windows: {
         stage('initWin') {
             node('Windows') {
@@ -15,8 +15,29 @@ stage ('Initialize') {
                 pipeLine.initialize('python', 'py3Env')
                 }
             }
+
+        stage('Build') {
+            node('Windows') {
+                pipeLine.build('py -2')
+                pipeLine.build('python')
+                }
+            }
+
+        stage('Test') {
+            node('Windows') {
+                pipeLine.test('py -2', 'py2')
+                pipeLine.test('python', 'py3')
+                }
+            }
+
+        stage('Publish') {
+            node('Windows') {
+                pipeLine.publish('py2')
+                pipeLine.publish('py3')
+                }
+            }
         },
-        linux: {
+    linux: {
         stage('initLinux') {
             node('Linux') {
                 checkout scm
@@ -26,63 +47,26 @@ stage ('Initialize') {
                 echo 'Building Python 3'
                 linuxPipeLine.initialize('python3', 'py3Env')
                 }
-            }
-        }
-
-stage ('Build') {
-    parallel windows: {
-        stage('BuildWin10') {
-            node('Windows') {
-                pipeLine.build('py -2')
-                pipeLine.build('python')
-                }
-            }
-        },
-    linux: {
-        stage('BuildLinux') {
+            }  
+        stage('Build') {
             node('Linux') {
                 linuxPipeLine.build('python')
                 linuxPipeLine.build('python3')
                 }
             }
-        }
-    }
 
-
-stage ('Test') {     
-    parallel windows: {
-        stage('TestWin10') {
-            node('Windows') {
-                pipeLine.test('py -2', 'py2')
-                pipeLine.test('python', 'py3')
-                }
-            }
-        },
-    linux: {
-        stage('TestLinux') {
+        stage('Test') {
             node('Linux') {
                 linuxPipeLine.test('python', 'py2')
                 linuxPipeLine.test('python3', 'py3')
                 }
             }
-        }
-    }
 
-stage ('Publish') {     
-    parallel windows: {
-        stage('PublishWin10') {
-                node('Windows') {
-                    pipeLine.publish('py2')
-                    pipeLine.publish('py3')
-                    }
-                }
-            },
-    linux : {
-        stage('PublishLinux') {
+        stage('Publish') {
             node('Linux') {
-                    linuxPipeLine.publish('py2')
-                    linuxPipeLine.publish('py3')
-                    }
+                linuxPipeLine.publish('py2')
+                linuxPipeLine.publish('py3')
                 }
             }
         }
+    }

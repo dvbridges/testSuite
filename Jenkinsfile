@@ -41,11 +41,31 @@ stage ('Test all') {
         stage('initLinux') {
             node('Linux') {
                 checkout scm
-                pipeLine = new LinuxPipeline()
+                linuxPipeLine = new LinuxPipeline()
                 echo 'Building Python 2'
-                pipeLine.initialize('python', 'py2Env')
+                linuxPipeLine.initialize('python', 'py2Env')
                 echo 'Building Python 3'
-                pipeLine.initialize('python3', 'py3Env')
+                linuxPipeLine.initialize('python3', 'py3Env')
+                }
+            }  
+        stage('Build') {
+            node('Linux') {
+                linuxPipeLine.build('python')
+                linuxPipeLine.build('python3')
+                }
+            }
+
+        stage('Test') {
+            node('Linux') {
+                linuxPipeLine.test('python', 'py2')
+                linuxPipeLine.test('python3', 'py3')
+                }
+            }
+
+        stage('Publish') {
+            node('Linux') {
+                linuxPipeLine.publish('py2')
+                linuxPipeLine.publish('py3')
                 }
             }
         }

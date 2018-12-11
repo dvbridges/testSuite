@@ -1,5 +1,5 @@
 //src/windows/pipeline.groovy
-package jenkinsLibs/windows;
+package windows;
 
 def initialize(python, pyEnv) {
     echo 'Building..'

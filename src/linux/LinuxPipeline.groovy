@@ -27,6 +27,7 @@ def build(python) {
     }    
     
 def test(python, pyEnv) {
+    sh "dir"
     sh "${python} -m pytest --cov-report xml:coverage${pyEnv}.xml --cov=proj tests" // creates coverage doc
     sh "${python} -m pylint --exit-zero -f parseable -r y proj > pylint${pyEnv}.out | type pylint${pyEnv}.out" // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
     }

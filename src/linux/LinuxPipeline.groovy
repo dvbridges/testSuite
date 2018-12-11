@@ -18,7 +18,7 @@ def initialize(python, pyEnv) {
     } catch(Exception e) {
         sh "${python} -m virtualenv ${pyEnv} --no-site-packages"
         }
-    sh "cd ${pyEnv}/bin ; activate"
+    sh "cd ${pyEnv}; source bin/activate"
     sh "${python} -m pip list"
     sh "${python} --version"
     }

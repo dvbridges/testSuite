@@ -1,11 +1,9 @@
-// import
-//@Library("shared_library@master")
 
 import windows.*
 import linux.*
 
 // instantiate
-stage('init') {
+stage('initWin') {
     node('Windows') {
         checkout scm
         pipeLine = new pipeline()
@@ -13,6 +11,17 @@ stage('init') {
         pipeLine.initialize('py -2', 'py2Env')
         echo 'Building Python 3'
         pipeLine.initialize('python', 'py3Env')
+        }
+    }
+
+stage('initLinux') {
+    node('Linux') {
+        checkout scm
+        pipeLine = new LinuxPipeline()
+        echo 'Building Python 2'
+        pipeLine.initialize('python', 'py2Env')
+        echo 'Building Python 3'
+        pipeLine.initialize('python3', 'py3Env')
         }
     }
 

@@ -1,5 +1,5 @@
-//src/windows/pipeline.groovy
-package windows;
+//src/macOS/MacPipeline.groovy
+package macOS;
 
 def initialize(python, pyEnv) {
     echo 'Building..'
@@ -10,29 +10,31 @@ def initialize(python, pyEnv) {
     echo "Jenkins home directory: ${env.JENKINS_HOME}"
     echo "Jenkins node name: ${env.NODE_NAME}"
     echo 'Checking parameters...'  // Example of scripting in declarative pipeline
-    bat "rmdir /s /q ${pyEnv}"
-    bat "${python} -m pip install -r requirements.txt --user"
+    sh "rm -rf ${pyEnv}"
+    sh "${python} -m pip install -r requirements.txt --user"
     
     try {
-        bat "${python} -m virtualenv ${pyEnv} --no-site-packages --relocatable"
+        sh "${python} -m virtualenv ${pyEnv} --no-site-packages --relocatable"
     } catch(Exception e) {
-        bat "${python} -m virtualenv ${pyEnv} --no-site-packages"
+        sh "${python} -m virtualenv ${pyEnv} --no-site-packages"
         }
-    bat "cd ${pyEnv}\\Scripts & activate"
-    bat "${python} -m pip list"
-    bat "${python} --version"
+    sh "cd ${pyEnv}; . bin/activate"
+    sh "${python} -m pip list"
+    sh "${python} --version"
     }
+    
 def build(python) {
-    bat "${python} setup.py develop --user"
+    sh "${python} setup.py develop --user"
     }    
     
 def test(python, pyEnv) {
-    bat "${python} -m pytest --cov-report xml:coverage${pyEnv}.xml --cov=proj tests" // creates coverage doc
-    bat "${python} -m pylint --exit-zero -f parseable -r y proj > pylint${pyEnv}.out | type pylint${pyEnv}.out" // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
+    sh "cat > pylint${pyEnv}.out"
+    sh "chmod 777 pylint${pyEnv}.out"
+    sh "${python} -m pytest --cov-report xml:coverage${pyEnv}.xml --cov=proj tests" // creates coverage doc
+    sh "${python} -m pylint --exit-zero -f parseable -r y proj >> pylint${pyEnv}.out" // creates pylint doc - here you create rules for checking code e.g., -d ERROR_CODE to disable warnings
     }
 
 def publish(pyEnv) {
-    bat 'dir /w'
     echo "${env.JENKINS_HOME}"
     echo "${env.WORKSPACE}"
     step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: "**/*${pyEnv}.xml", failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])

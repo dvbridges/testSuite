@@ -1,18 +1,18 @@
-
+// Import libs
 import windows.*
 import linux.*
-
+import macOS.*
 
 stage ('Initialize') {
     parallel windows: {
         stage('initWin') {
             node('Windows') {
                 checkout scm
-                pipeLine = new pipeline()
+                winPipeLine = new WinPipeline()
                 echo 'Building Python 2'
-                pipeLine.initialize('py -2', 'py2Env')
+                winPipeLine.initialize('py -2', 'py2Env')
                 echo 'Building Python 3'
-                pipeLine.initialize('python', 'py3Env')
+                winPipeLine.initialize('python', 'py3Env')
                 }
             }
         },
@@ -28,14 +28,27 @@ stage ('Initialize') {
                 }
             }
         }
+        
+        macOS: {
+        stage('initLinux') {
+            node('macOS') {
+                checkout scm
+                macPipeLine = new MacPipeline()
+                echo 'Building Python 2'
+                macPipeLine.initialize('python', 'py2Env')
+                echo 'Building Python 3'
+                macPipeLine.initialize('python3', 'py3Env')
+                }
+            }
+        }
     }
 
 stage ('Build') {
     parallel windows: {
         stage('BuildWin10') {
             node('Windows') {
-                pipeLine.build('py -2')
-                pipeLine.build('python')
+                winPipeLine.build('py -2')
+                winPipeLine.build('python')
                 }
             }
         },
@@ -47,6 +60,14 @@ stage ('Build') {
                 }
             }
         }
+    macOS: {
+        stage('BuildMac') {
+            node('macOS') {
+                macPipeLine.build('python')
+                macPipeLine.build('python3')
+                }
+            }
+        }
     }
 
 
@@ -54,8 +75,8 @@ stage ('Test') {
     parallel windows: {
         stage('TestWin10') {
             node('Windows') {
-                pipeLine.test('py -2', 'py2')
-                pipeLine.test('python', 'py3')
+                winPipeLine.test('py -2', 'py2')
+                winPipeLine.test('python', 'py3')
                 }
             }
         },
@@ -67,14 +88,22 @@ stage ('Test') {
                 }
             }
         }
+    macOS: {
+        stage('TestMacOS') {
+            node('macOS') {
+                macPipeLine.test('python', 'py2')
+                macPipeLine.test('python3', 'py3')
+                }
+            }
+        }
     }
 
 stage ('Publish') {     
     parallel windows: {
         stage('PublishWin10') {
             node('Windows') {
-                pipeLine.publish('py2')
-                pipeLine.publish('py3')
+                winPipeLine.publish('py2')
+                winPipeLine.publish('py3')
                 }
             }
         },
@@ -83,6 +112,14 @@ stage ('Publish') {
             node('Linux') {
                 linuxPipeLine.publish('py2')
                 linuxPipeLine.publish('py3')
+                }
+            }
+        }
+    macOS : {
+        stage('PublishMacOS') {
+            node('macOS') {
+                macPipeLine.publish('py2')
+                macPipeLine.publish('py3')
                 }
             }
         }

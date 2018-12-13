@@ -30,7 +30,7 @@ stage ('Initialize') {
         }
         
         macOS: {
-        stage('initLinux') {
+        stage('initMac') {
             node('macOS') {
                 checkout scm
                 macPipeLine = new MacPipeline()

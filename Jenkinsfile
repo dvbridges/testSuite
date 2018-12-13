@@ -31,7 +31,7 @@ stage ('Initialize') {
         
         macOS: {
         stage('initMac') {
-            node('macOS') {
+            node('MacOS') {
                 checkout scm
                 macPipeLine = new MacPipeline()
                 echo 'Building Python 2'
@@ -62,7 +62,7 @@ stage ('Build') {
         }
     macOS: {
         stage('BuildMac') {
-            node('macOS') {
+            node('MacOS') {
                 macPipeLine.build('python')
                 macPipeLine.build('python3')
                 }
@@ -90,7 +90,7 @@ stage ('Test') {
         }
     macOS: {
         stage('TestMacOS') {
-            node('macOS') {
+            node('MacOS') {
                 macPipeLine.test('python', 'py2')
                 macPipeLine.test('python3', 'py3')
                 }
@@ -117,7 +117,7 @@ stage ('Publish') {
         }
     macOS : {
         stage('PublishMacOS') {
-            node('macOS') {
+            node('MacOS') {
                 macPipeLine.publish('py2')
                 macPipeLine.publish('py3')
                 }

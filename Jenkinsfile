@@ -102,31 +102,9 @@ stage ('Test') {
         }
     }
 
-stage ('Publish') {     
-    parallel windows: {
-        stage('PublishWin10') {
-            node('Windows') {
-                winPipeLine.publish('py2')
-                winPipeLine.publish('py3')
-                }
-            }
-        },
-        
-    linux : {
-        stage('PublishLinux') {
-            node('Linux') {
-                linuxPipeLine.publish('py2')
-                linuxPipeLine.publish('py3')
-                }
-            }
-        },
-        
-    macOS : {
-        stage('PublishMacOS') {
-            node('MacOS') {
-                macPipeLine.publish('py2')
-                macPipeLine.publish('py3')
-                }
-            }
+stage ('Code Cov & Warnings') {     
+    node('Linux') {
+        linuxPipeLine.publish('py2')
+        linuxPipeLine.publish('py3')
         }
     }

@@ -16,7 +16,7 @@ stage ('Initialize') {
                 }
             }
         },
-        linux: {
+    linux: {
         stage('initLinux') {
             node('Linux') {
                 checkout scm
@@ -27,9 +27,9 @@ stage ('Initialize') {
                 linuxPipeLine.initialize('python3', 'py3Env')
                 }
             }
-        }
+        },
         
-        macOS: {
+    macOS: {
         stage('initMac') {
             node('MacOS') {
                 checkout scm
@@ -52,6 +52,7 @@ stage ('Build') {
                 }
             }
         },
+        
     linux: {
         stage('BuildLinux') {
             node('Linux') {
@@ -59,7 +60,8 @@ stage ('Build') {
                 linuxPipeLine.build('python3')
                 }
             }
-        }
+        },
+
     macOS: {
         stage('BuildMac') {
             node('MacOS') {
@@ -80,6 +82,7 @@ stage ('Test') {
                 }
             }
         },
+        
     linux: {
         stage('TestLinux') {
             node('Linux') {
@@ -87,7 +90,8 @@ stage ('Test') {
                 linuxPipeLine.test('python3', 'py3')
                 }
             }
-        }
+        },
+        
     macOS: {
         stage('TestMacOS') {
             node('MacOS') {
@@ -107,6 +111,7 @@ stage ('Publish') {
                 }
             }
         },
+        
     linux : {
         stage('PublishLinux') {
             node('Linux') {
@@ -114,7 +119,8 @@ stage ('Publish') {
                 linuxPipeLine.publish('py3')
                 }
             }
-        }
+        },
+        
     macOS : {
         stage('PublishMacOS') {
             node('MacOS') {

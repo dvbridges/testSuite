@@ -11,7 +11,6 @@ def initialize(python, pyEnv) {
     echo "Jenkins node name: ${env.NODE_NAME}"
     echo 'Checking parameters...'  // Example of scripting in declarative pipeline
     sh "rm -rf ${pyEnv}"
-    sh "echo $PATH"
     sh "${python} -m pip install -r requirements.txt --user"
     
     try {

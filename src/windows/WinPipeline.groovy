@@ -13,7 +13,7 @@ def initialize(python, pyEnv) {
     try {
         bat "rmdir /s /q ${pyEnv}"
     } catch(Exception e) {
-        continue
+        println("Catching the exception");
     }
     bat "${python} -m pip install -r requirements.txt --user"
     

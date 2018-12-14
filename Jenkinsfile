@@ -37,7 +37,7 @@ stage ('Initialize') {
                 echo 'Building Python 2'
                 macPipeLine.initialize('python', 'py2Env')
                 echo 'Building Python 3'
-                macPipeLine.initialize('python3', 'py3Env')
+                macPipeLine.initialize('python3.6', 'py3Env')
                 }
             }
         }

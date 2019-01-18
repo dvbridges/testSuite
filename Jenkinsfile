@@ -27,20 +27,19 @@ stage ('Initialize') {
                 linuxPipeLine.initialize('python3', 'py3Env')
                 }
             }
-        },
-        
-    macOS: {
-        stage('initMac') {
-            node('MacOS') {
-                checkout scm
-                macPipeLine = new MacPipeline()
-                echo 'Building Python 2'
-                macPipeLine.initialize('python', 'py2Env')
-                echo 'Building Python 3'
-                macPipeLine.initialize('python3', 'py3Env')
-                }
-            }
-        }
+        },    
+    //macOS: {
+    //    stage('initMac') {
+    //        node('MacOS') {
+    //            checkout scm
+    //            macPipeLine = new MacPipeline()
+    //            echo 'Building Python 2'
+    //            macPipeLine.initialize('python', 'py2Env')
+    //            echo 'Building Python 3'
+    //            macPipeLine.initialize('python3', 'py3Env')
+    //            }
+    //        }
+    //    } 
     }
 
 stage ('Build') {
@@ -61,15 +60,15 @@ stage ('Build') {
                 }
             }
         },
-
-    macOS: {
-        stage('BuildMac') {
-            node('MacOS') {
-                macPipeLine.build('python')
-                macPipeLine.build('python3')
-                }
-            }
-        }
+	
+    //macOS: {
+    //    stage('BuildMac') {
+    //        node('MacOS') {
+    //            macPipeLine.build('python')
+    //            macPipeLine.build('python3')
+    //            }
+    //        }
+    //    }
     }
 
 
@@ -91,15 +90,15 @@ stage ('Test') {
                 }
             }
         },
-        
-    macOS: {
-        stage('TestMacOS') {
-            node('MacOS') {
-                macPipeLine.test('python', 'py2')
-                macPipeLine.test('python3', 'py3')
-                }
-            }
-        }
+  
+    //macOS: {
+    //    stage('TestMacOS') {
+    //        node('MacOS') {
+    //            macPipeLine.test('python', 'py2')
+    //            macPipeLine.test('python3', 'py3')
+    //            }
+    //        }
+    //    }
     }
 
 stage ('Code Cov & Warnings') {     

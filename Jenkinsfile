@@ -27,7 +27,7 @@ stage ('Initialize') {
                 linuxPipeLine.initialize('python3', 'py3Env')
                 }
             }
-        },    
+        }    
     //macOS: {
     //    stage('initMac') {
     //        node('MacOS') {
@@ -59,8 +59,7 @@ stage ('Build') {
                 linuxPipeLine.build('python3')
                 }
             }
-        },
-	
+        }
     //macOS: {
     //    stage('BuildMac') {
     //        node('MacOS') {
@@ -89,8 +88,7 @@ stage ('Test') {
                 linuxPipeLine.test('python3', 'py3')
                 }
             }
-        },
-  
+        }
     //macOS: {
     //    stage('TestMacOS') {
     //        node('MacOS') {
